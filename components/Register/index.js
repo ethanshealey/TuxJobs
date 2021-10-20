@@ -24,13 +24,20 @@ const Register = props => {
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
 
+    // on register request
     const onRegister = () => {
+        // if the input is valid continue
         if(username && password === confirmPassword) {
+            // use auth object to create a new user 
+            // on firebase
             auth
             .createUserWithEmailAndPassword(email, password)
             .then((userCredentials) => {
+                // update the new users displayName
                 userCredentials.user.updateProfile({ displayName: username })
+                // set the user hook to the new user
                 props.setUser(userCredentials.user)
+                // add a new user to the db
                 const userRef = db.collection('Users').add({
                     uid: userCredentials.user.uid,
                     username: username,

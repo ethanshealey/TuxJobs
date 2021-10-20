@@ -22,10 +22,14 @@ const Login = props => {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
+    // on login request
     const onLogin = () => {
+        // use the auth object to request sign in from firebase
         auth
             .signInWithEmailAndPassword(email, password)
             .then(userCredentials => {
+                // if successful set the user hook to 
+                // the signed in user
                 props.setUser(userCredentials.user)
             })
             .catch((e) => alert("Error logging in"))

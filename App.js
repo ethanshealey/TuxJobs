@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { NativeBaseProvider, Text, Box, Center } from 'native-base';
-import firebase, { auth } from './firebase.js'
+import React, { useState } from 'react'
+import { NativeBaseProvider } from 'native-base';
+import { auth } from './firebase.js'
 
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
@@ -9,6 +9,7 @@ const App = () => {
 
   const [ user, setUser ] = useState(null)
 
+  // logout the currently signed in user
   const logout = () => {
     setUser(null)
     auth.signOut()
@@ -16,7 +17,11 @@ const App = () => {
 
   return (
     <NativeBaseProvider>
-       { user === null ? <Auth setUser={setUser} /> : <Dashboard logout={logout} user={user} /> }
+       { user === null ? 
+        <Auth setUser={setUser} /> // if the user is not signed in, show Auth page
+          : 
+        <Dashboard logout={logout} user={user} /> // if the user has signed in, show Dashboard
+       }
     </NativeBaseProvider>
   )
 }

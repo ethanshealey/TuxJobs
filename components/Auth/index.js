@@ -8,7 +8,11 @@ const Auth = props => {
 
     return (
         <>
-            { showLogin ? <Login setUser={props.setUser} setShowLogin={setShowLogin} /> : <Register setUser={props.setUser} setShowLogin={setShowLogin} /> }
+            { showLogin ? 
+                <Login setUser={props.setUser} setShowLogin={setShowLogin} /> // show the Login page
+                : 
+                <Register setUser={props.setUser} setShowLogin={setShowLogin} /> // show the Register page
+            }
         </>
     )
 }
