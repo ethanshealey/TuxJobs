@@ -1,8 +1,44 @@
 // Import the functions you need from the SDKs you need
 import * as firebase from "firebase";
 import "firebase/firestore"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
+/***
+ * 
+ * @NOTE HOW TO USE FIRESTORE
+ * 
+ ************************************************************************
+ * 
+ * How to GET data from firestore:
+ * 
+ * const getUsers = async () => {
+ *      const data = await db.collection('Users').get().then((qs) => {
+ *           qs.forEach((doc) => {
+ *               let d = doc.data()
+ *               console.log(d)
+ *           })
+ *       })
+ *   }
+ * 
+ ************************************************************************
+ * 
+ * How to PUT data to firestore:
+ * 
+ * const userRef = db.collection('Users').add({
+ *    uid: userCredentials.user.uid,
+ *    username: username,
+ *    email: email,
+ *    saved_jobs: [],
+ * })
+ *
+ ************************************************************************
+ *
+ * How to UPDATE data to firestore:
+ * 
+ * const ref = await db.collection('Users').doc(id).update({
+ *      saved_jobs: [...savedJobs, 1]
+ * })
+ * 
+ */
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
