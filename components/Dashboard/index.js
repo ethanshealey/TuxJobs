@@ -44,10 +44,10 @@ const Dashboard = props => {
             <Text fontSize="xl">Welcome, {username}!</Text>
             <Button onPress={addSavedJob}>Save Job</Button>
             { savedJobs.map((job) => (
-                <>
-                    <Text>{job.jobName}</Text>
+                <Box key={job.jobId}>
+                    <Text>{job.jobName} {job.jobId}</Text>
                     <Link onPress={() => removeSavedJob(job.jobId)}>Remove</Link>
-                </>
+                </Box>
             )) }
             <Button onPress={props.logout}>Logout</Button>
         </Center>
