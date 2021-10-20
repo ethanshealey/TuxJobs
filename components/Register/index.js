@@ -15,7 +15,7 @@ import {
   HStack,
   Divider,
 } from 'native-base';
-import { auth } from '../../firebase.js' 
+import { auth, db } from '../../firebase.js' 
 
 const Register = props => {
 
@@ -31,6 +31,12 @@ const Register = props => {
             .then((userCredentials) => {
                 userCredentials.user.updateProfile({ displayName: username })
                 props.setUser(userCredentials.user)
+                const userRef = db.collection('Users').add({
+                    uid: userCredentials.user.uid,
+                    username: username,
+                    email: email,
+                    saved_jobs: [],
+                })
             })
             .catch(e => alert(e.message))
         }
