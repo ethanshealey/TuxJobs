@@ -1,21 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { NativeBaseProvider, Text, Box, Center } from 'native-base';
+import firebase, { auth } from './firebase.js'
 
-export default function App() {
+import Auth from './components/Auth'
+import Dashboard from './components/Dashboard'
+
+const App = () => {
+
+  const [ user, setUser ] = useState(null)
+
+  const logout = () => {
+    setUser(null)
+    auth.signOut()
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NativeBaseProvider>
+       { user === null ? <Auth setUser={setUser} /> : <Dashboard logout={logout} user={user} /> }
+    </NativeBaseProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
