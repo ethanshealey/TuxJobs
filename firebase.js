@@ -35,7 +35,7 @@ import "firebase/firestore"
  * How to UPDATE data to firestore:
  * 
  * const ref = await db.collection('Users').doc(id).update({
- *      saved_jobs: [...savedJobs, 1]
+ *     name: "Ethan Shealey"
  * })
  * 
  */

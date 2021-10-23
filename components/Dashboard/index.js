@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Center, Button, Text, Link, Spinner } from 'native-base'
-import { db } from '../../firebase.js'
+import { Box, Header, Center, Button, Text, Link, Spinner } from 'native-base'
+import { auth, db } from '../../firebase.js'
+import TinderCard from 'react-tinder-card'
+//import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const Dashboard = props => {
 
@@ -9,11 +11,13 @@ const Dashboard = props => {
     const [ email, setEmail ] = useState('')
     const [ savedJobs, setSavedJobs ] = useState([])
     const [ isLoaded, setIsLoaded ] = useState(false)
+    const [ jobs, setJobs ] = useState([])
+    //const [ swipedDir, setSwipedDir ] = useState('')
 
     useEffect(() => {
         getCurrentUser()
     }, [])
-    
+
     const getCurrentUser = async () => {
         setIsLoaded(false)
         const data = await db.collection('Users').where('uid', '==', props.user.uid).get().then((qs) => {
@@ -52,13 +56,7 @@ const Dashboard = props => {
             { isLoaded ? 
                 <>
                     <Text fontSize="xl">Welcome, {username}!</Text>
-                    <Button onPress={addSavedJob}>Save Job</Button>
-                    { savedJobs.map((job) => (
-                        <Box key={job.jobId}>
-                            <Text>{job.jobName}</Text>
-                            <Link onPress={() => removeSavedJob(job.jobId)}>Remove</Link>
-                        </Box>
-                    )) }
+                   
                     <Button onPress={props.logout}>Logout</Button>
                 </>
                 :

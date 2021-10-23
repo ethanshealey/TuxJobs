@@ -29,7 +29,7 @@ const Login = props => {
             .signInWithEmailAndPassword(email, password)
             .then(userCredentials => {
                 // if successful set the user hook to 
-                // the signed in user
+                // the signed in
                 props.setUser(userCredentials.user)
             })
             .catch((e) => alert("Error logging in"))

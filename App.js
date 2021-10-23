@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NativeBaseProvider } from 'native-base';
 import { auth } from './firebase.js'
 
@@ -9,6 +9,12 @@ const App = () => {
 
   const [ user, setUser ] = useState(null)
 
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      setUser(user)
+    })
+  }, [user])
+
   // logout the currently signed in user
   const logout = () => {
     setUser(null)
@@ -17,10 +23,9 @@ const App = () => {
 
   return (
     <NativeBaseProvider>
-       { user === null ? 
-        <Auth setUser={setUser} /> // if the user is not signed in, show Auth page
-          : 
-        <Dashboard logout={logout} user={user} /> // if the user has signed in, show Dashboard
+       { 
+          // if the user is null, show the Auth page and wait until the user signs in
+          user === null ? <Auth setUser={setUser} /> : <Dashboard logout={logout} user={user} /> 
        }
     </NativeBaseProvider>
   )
