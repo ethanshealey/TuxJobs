@@ -56,7 +56,6 @@ const Dashboard = props => {
             { isLoaded ? 
                 <>
                     <Text fontSize="xl">Welcome, {username}!</Text>
-                   
                     <Button onPress={props.logout}>Logout</Button>
                 </>
                 :

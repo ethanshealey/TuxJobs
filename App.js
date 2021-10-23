@@ -10,6 +10,7 @@ const App = () => {
   const [ user, setUser ] = useState(null)
   const [ hasLoaded, setHasLoaded ] = useState(false)
 
+  // persist user state
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       setUser(user)
@@ -25,15 +26,15 @@ const App = () => {
 
   return (
     <NativeBaseProvider>
+      <Center  flex={1} px="3">
        { 
           // if the user is null, show the Auth page and wait until the user signs in
           hasLoaded ? 
             user === null ? <Auth setUser={setUser} /> : <Dashboard logout={logout} user={user} /> 
             :
-            <Center  flex={1} px="3">
-              <Spinner size="lg" />
-            </Center>
+          <Spinner size="lg" />
        }
+      </Center>
     </NativeBaseProvider>
   )
 }
