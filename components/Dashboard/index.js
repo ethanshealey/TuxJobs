@@ -1,22 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Header, Center, Button, Text, Link, Spinner } from 'native-base'
-import { auth, db } from '../../firebase.js'
-import TinderCard from 'react-tinder-card'
-//import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import { db } from '../../firebase.js'
+import JobCard from '../JobCard'
+import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 const Dashboard = props => {
 
+    const [ hasRan, setHasRan] = useState(false)
     const [ id, setId ] = useState('')
     const [ username, setUsername ] = useState('')
     const [ email, setEmail ] = useState('')
-    const [ savedJobs, setSavedJobs ] = useState([])
-    const [ isLoaded, setIsLoaded ] = useState(false)
     const [ jobs, setJobs ] = useState([])
-    //const [ swipedDir, setSwipedDir ] = useState('')
+    const [ isLoaded, setIsLoaded ] = useState(false)
+    const [ swiper, setSwiper ] = useState(null)
 
+    // onload, get the current user's data
     useEffect(() => {
         getCurrentUser()
     }, [])
+
+    // if `jobs` changed, update the database
+    useEffect(() => {
+        const updateJobs = async () => {
+            const ref = await db.collection('Users').doc(id.toString()).update({
+                jobs: [...jobs]
+            })
+        }
+        if(hasRan) {
+            updateJobs()
+        }
+        setHasRan(true)
+    }, [jobs])
+
+    let jobList = [ 
+        {id: 1, company: 'Amazon', role: 'Software Engineer'},
+        {id: 2, company: 'IBM', role: 'Software Engineer'},
+        {id: 3, company: 'Google', role: 'Frontend Developer'},
+        {id: 4, company: 'Twitch', role: 'Software Engineer'},
+        {id: 5, company: 'Microsoft', role: 'Software Engineer'}
+    ]
 
     const getCurrentUser = async () => {
         setIsLoaded(false)
@@ -25,43 +47,45 @@ const Dashboard = props => {
                 setId(doc.id)
                 setUsername(doc.data().username)
                 setEmail(doc.data().email)
-                setSavedJobs(doc.data().saved_jobs)
+                setJobs(doc.data().jobs)
             })
         })
         setIsLoaded(true)
     }
 
-    const addSavedJob = async () => {
-        const newId = savedJobs.slice(-1)[0] ? savedJobs.slice(-1)[0]?.jobId + 1 : 0
-        const newJob = {
-            jobId: newId,
-            jobUrl: "https://www.google.com",
-            jobName: "Job " + newId
-        }
-        const ref = await db.collection('Users').doc(id).update({
-            saved_jobs: [...savedJobs, newJob]
-        })
-        setSavedJobs([ ...savedJobs, newJob ])
+    const handleSwipe = (didLike) => {
+        const current_job = jobList[0]
+        current_job.liked = didLike
+        jobList = jobList.splice(1)
+        setJobs(prevJobs => [...prevJobs, current_job])
     }
 
-    const removeSavedJob = async (jobId) => {
-        const ref = await db.collection('Users').doc(id).update({
-            saved_jobs: savedJobs.filter((job) => job.jobId !== jobId)
-        })
-        setSavedJobs(savedJobs.filter((job) => job.jobId !== jobId))
+    const handleSwipeRight = () => {
+        handleSwipe(true)
+    }
+
+    const handleSwipeLeft = () => {
+        handleSwipe(false)
     }
 
     return (
-        <Center flex={1} px="3">
+        <>
             { isLoaded ? 
                 <>
-                    <Text fontSize="xl">Welcome, {username}!</Text>
-                    <Button onPress={props.logout}>Logout</Button>
+                    <CardStack disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}}>
+                    { jobList.map((job) => (
+                        <Card key={job.id} onSwipedRight={() => handleSwipeRight()} onSwipedLeft={() => handleSwipeLeft()}>
+                            <JobCard job={job} />
+                        </Card>
+                    )) }
+                    </CardStack>
+                    <Button onPress={() => { swiper.swipeLeft() }}>Dont Like</Button>
+                    <Button onPress={() => { swiper.swipeRight() }}>Like</Button>
                 </>
                 :
                 <Spinner size="lg" />
             }
-        </Center>
+        </>
     )
 }
 

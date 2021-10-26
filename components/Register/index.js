@@ -42,7 +42,7 @@ const Register = props => {
                     uid: userCredentials.user.uid,
                     username: username,
                     email: email,
-                    saved_jobs: [],
+                    jobs: [],
                 })
             })
             .catch(e => alert(e.message))
