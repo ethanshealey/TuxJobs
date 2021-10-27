@@ -2,23 +2,28 @@ import React, { useState, useEffect } from 'react'
 import { Box, Header, Center, Button, Text, Link, Spinner } from 'native-base'
 import { db } from '../../firebase.js'
 import JobCard from '../JobCard'
-import CardStack, { Card } from 'react-native-card-stack-swiper';
+import Footer from '../Footer'
+import CardStack, { Card } from 'react-native-card-stack-swiper'
+import JobSwipe from '../JobSwipe'
+import { getGraphQLJobs } from '../../API/graphQLjobs/index.js'
+import HeaderBar from '../HeaderBar'
 
 const Dashboard = props => {
 
-    const [ hasRan, setHasRan] = useState(false)
     const [ id, setId ] = useState('')
     const [ username, setUsername ] = useState('')
     const [ email, setEmail ] = useState('')
-    const [ jobs, setJobs ] = useState([])
     const [ isLoaded, setIsLoaded ] = useState(false)
-    const [ swiper, setSwiper ] = useState(null)
+    const [ selected, setSelected ] = useState(1)
+    const [ currentJobs, setCurrentJobs ] = useState([])
+    const [ jobs, setJobs ] = useState([])
 
     // onload, get the current user's data
     useEffect(() => {
         getCurrentUser()
     }, [])
 
+    /*
     // if `jobs` changed, update the database
     useEffect(() => {
         const updateJobs = async () => {
@@ -30,16 +35,18 @@ const Dashboard = props => {
             updateJobs()
         }
         setHasRan(true)
-    }, [jobs])
+    }, [jobs])*/
 
-    let jobList = [ 
-        {id: 1, company: 'Amazon', role: 'Software Engineer'},
-        {id: 2, company: 'IBM', role: 'Software Engineer'},
-        {id: 3, company: 'Google', role: 'Frontend Developer'},
-        {id: 4, company: 'Twitch', role: 'Software Engineer'},
-        {id: 5, company: 'Microsoft', role: 'Software Engineer'}
-    ]
+    useEffect(() => {
+        getGraphQLJobs().then(d => { setJobs(d) })
+    }, [])
 
+    useEffect(() => {
+        currentJobs.forEach((job) => {
+            setJobs(jobs.filter((j) => j.id !== job.id))
+        })
+    }, [currentJobs])
+  
     const getCurrentUser = async () => {
         setIsLoaded(false)
         const data = await db.collection('Users').where('uid', '==', props.user.uid).get().then((qs) => {
@@ -47,43 +54,43 @@ const Dashboard = props => {
                 setId(doc.id)
                 setUsername(doc.data().username)
                 setEmail(doc.data().email)
-                setJobs(doc.data().jobs)
+                setCurrentJobs(doc.data().jobs)
             })
         })
         setIsLoaded(true)
     }
 
-    const handleSwipe = (didLike) => {
-        const current_job = jobList[0]
-        current_job.liked = didLike
-        jobList = jobList.splice(1)
-        setJobs(prevJobs => [...prevJobs, current_job])
-    }
-
-    const handleSwipeRight = () => {
-        handleSwipe(true)
-    }
-
-    const handleSwipeLeft = () => {
-        handleSwipe(false)
+    const filterJobs = async () => {
+        const ref = await db.collection('Users').where('uid', '==', props.user.uid).get().then((res) => {
+            res.forEach((doc) => {
+                setCurrentJobs(doc.data().jobs)
+            })
+        })
+    /*
+        currentJobs.forEach((job) => {
+            setJobs(jobs.filter((j) => j.id !== job.id))
+        })*/
     }
 
     return (
         <>
             { isLoaded ? 
-                <>
-                    <CardStack disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}}>
-                    { jobList.map((job) => (
-                        <Card key={job.id} onSwipedRight={() => handleSwipeRight()} onSwipedLeft={() => handleSwipeLeft()}>
-                            <JobCard job={job} />
-                        </Card>
-                    )) }
-                    </CardStack>
-                    <Button onPress={() => { swiper.swipeLeft() }}>Dont Like</Button>
-                    <Button onPress={() => { swiper.swipeRight() }}>Like</Button>
-                </>
+                
+                <Box flex={1} bg="white" safeAreaTop>
+                    <HeaderBar />
+                    <Center flex={1}>
+                    { 
+                        selected === 0 ? <>History</> :
+                        selected === 1 ? <JobSwipe jobs={jobs} filterJobs={filterJobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
+                        selected === 2 ? <>Settings</> : <>ERROR</>
+                    }
+                    </Center>
+                    <Footer selected={selected} setSelected={setSelected} />
+                </Box>
                 :
-                <Spinner size="lg" />
+                <Center flex={1} px="3">
+                    <Spinner size="lg" />
+                </Center>
             }
         </>
     )

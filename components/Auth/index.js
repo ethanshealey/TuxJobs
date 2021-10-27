@@ -9,12 +9,14 @@ const Auth = props => {
     const [ showLogin, setShowLogin ] = useState(true)
 
     return (
-        <KeyboardAvoidingView w="100%">
-            { 
-                // toggle between login and register page
-                showLogin ? <Login setUser={props.setUser} setShowLogin={setShowLogin} /> : <Register setUser={props.setUser} setShowLogin={setShowLogin} /> // show the Register page
-            }
-        </KeyboardAvoidingView>
+        <Center flex={1} px="3">
+            <KeyboardAvoidingView w="100%">
+                { 
+                    // toggle between login and register page
+                    showLogin ? <Login setUser={props.setUser} setShowLogin={setShowLogin} /> : <Register setUser={props.setUser} setShowLogin={setShowLogin} /> // show the Register page
+                }
+            </KeyboardAvoidingView>
+        </Center>
     )
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Heading,
@@ -8,12 +8,11 @@ import {
   Text,
   Center,
   HStack,
-  Stack,
-  NativeBaseProvider
+  Stack
 } from 'native-base';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 const JobCard = props => {
+
     return (
         <Box
         rounded="lg"
@@ -26,10 +25,7 @@ const JobCard = props => {
         <Box>
           <AspectRatio ratio={16 / 9}>
             <Image
-              source={{
-                uri:
-                  'https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg',
-              }}
+              source={{ uri: props.job.company.logoUrl ? props.job.company.logoUrl : 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'}}
               alt="image"
             />
           </AspectRatio>
@@ -41,22 +37,22 @@ const JobCard = props => {
             px="3"
             py="1.5"
           >
-            {props.job.company}
+            {props.job.company.name}
           </Center>
         </Box>
         <Stack p="4" space={3}>
           <Stack space={2}>
             <Heading size="md" ml="-1">
-              {props.job.role}
+              {props.job.title}
             </Heading>
           </Stack>
-          <Text fontWeight="400">
-            This job needs 16 years+ of experience. In order to job at this job, you must have experience in the field of job.
+          <Text isTruncated noOfLines={7} fontWeight="400">
+            {props.job.description}
           </Text>
           <HStack alignItems="center" space={4} justifyContent="space-between">
             <HStack alignItems="center">
               <Text color="gray.500" fontWeight="400">
-                6 mins ago
+                {props.job.postedAt}
               </Text>
             </HStack>
           </HStack>

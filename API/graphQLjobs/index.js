@@ -18,21 +18,21 @@ const getGraphQLJobs = async () => {
                 }
                 tags {
                     name
-                    }
+                }
                 postedAt,
                 description,
+                applyUrl,
                 company {
-                    name
+                    name,
+                    logoUrl
                 }
             }
         }
     `;
 
-    request('https://api.graphql.jobs/', query)
-        .then(console.log)
+    let res = await request('https://api.graphql.jobs/', query)
 
-
-
+    return res.jobs
 }
 
 export { getGraphQLJobs }
