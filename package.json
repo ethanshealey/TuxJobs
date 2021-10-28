@@ -13,6 +13,8 @@
     "firebase": "8.2.3",
     "graphql": "^15.6.1",
     "graphql-request": "^3.6.1",
+    "javascript-time-ago": "^2.3.10",
+    "moment": "^2.29.1",
     "native-base": "^3.2.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",

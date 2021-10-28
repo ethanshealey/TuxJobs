@@ -8,8 +8,10 @@ import {
   Text,
   Center,
   HStack,
-  Stack
+  Stack,
+  Divider
 } from 'native-base';
+import { getTimeSince } from "../../CustomDate";
 
 const JobCard = props => {
 
@@ -29,30 +31,25 @@ const JobCard = props => {
               alt="image"
             />
           </AspectRatio>
-          <Center
-            bg="violet.500"
-            _text={{ color: 'white', fontWeight: '700', fontSize: 'xs' }}
-            position="absolute"
-            bottom={0}
-            px="3"
-            py="1.5"
-          >
-            {props.job.company.name}
-          </Center>
         </Box>
         <Stack p="4" space={3}>
           <Stack space={2}>
-            <Heading size="md" ml="-1">
+            <Heading size="lg" ml="-1">
               {props.job.title}
             </Heading>
+            <Divider />
+            <Heading size="md" ml="-1">
+              {props.job.company}
+            </Heading>
+            <Heading size="sm" ml="-1">
+              {props.job.location}
+            </Heading>
           </Stack>
-          <Text isTruncated noOfLines={7} fontWeight="400">
-            {props.job.description}
-          </Text>
+          
           <HStack alignItems="center" space={4} justifyContent="space-between">
             <HStack alignItems="center">
               <Text color="gray.500" fontWeight="400">
-                {props.job.postedAt}
+                {getTimeSince(new Date(props.job.updated))}
               </Text>
             </HStack>
           </HStack>

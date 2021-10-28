@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NativeBaseProvider, Spinner, Center } from 'native-base';
+import { NativeBaseProvider, Spinner, StatusBar } from 'native-base';
 import { auth } from './firebase.js'
 
 import Auth from './components/Auth'
@@ -18,7 +18,6 @@ const App = () => {
       setHasLoaded(true)
     })
   }, [user])
-
 
   // logout the currently signed in user
   const logout = () => {

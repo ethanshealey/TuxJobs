@@ -20,7 +20,7 @@ const HeaderBar = props => {
     return (
         <HStack bg="indigo.600" alignItems="center" height="10" safeAreaTop shadow={6}>
           <Pressable>
-            <Center>
+            <Center flex={1} px={3}>
               <Icon
                 mb="0"
                 style={{ top: -25 }}

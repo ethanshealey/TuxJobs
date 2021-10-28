@@ -1,19 +1,26 @@
 import React, { useState, useEffect, memo } from 'react'
 import JobCard from '../JobCard'
-import { HStack, Stack, Center, Text, Button, IconButton } from 'native-base'
+import { HStack, Stack, Center, Text, Button, IconButton, Spinner } from 'native-base'
 import CardStack, { Card } from 'react-native-card-stack-swiper'
 import { StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { db } from '../../firebase.js'
+
 const JobSwipe = props => {
 
     const [ swiper, setSwiper ] = useState(null)
+
+    useEffect(() => {
+        props.currentJobs.forEach(job => {
+            props.setJobs(prevJobs => prevJobs.filter(j => j.id !== job.id))
+        })
+    }, [])
 
     const handleSwipe = async (job) => {
         db.collection('Users').doc(props.userId.toString()).update({
             jobs: [...props.currentJobs, job]
         }).then(() => {
-            props.filterJobs()
+            props.setCurrentJobs(prevJobs => [ ...prevJobs, job ])
         })
     }
 
@@ -28,8 +35,8 @@ const JobSwipe = props => {
     }
 
     return (
-        <>
-            <CardStack style={styles.content} disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}} renderNoMoreCards={() => <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>No more Jobs :(</Text>}>
+        <Center flex={1} px={3}>
+            <CardStack style={styles.content} disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}} renderNoMoreCards={() => <Spinner size="lg" />}>
                 {props.jobs.map((job) => (
                     <Card key={job.id} onSwipedRight={() => handleSwipeRight(job)} onSwipedLeft={() => handleSwipeLeft(job)}>
                         <JobCard job={job} key={job.id} />
@@ -46,7 +53,7 @@ const JobSwipe = props => {
                         onPress={() => swiper.swipeRight()}
                     />
             </HStack>
-        </>
+        </Center>
     )
 }
 
