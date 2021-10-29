@@ -16,12 +16,14 @@ const JobSwipe = props => {
         })
     }, [])
 
-    const handleSwipe = async (job) => {
+    useEffect(() => {
         db.collection('Users').doc(props.userId.toString()).update({
-            jobs: [...props.currentJobs, job]
-        }).then(() => {
-            props.setCurrentJobs(prevJobs => [ ...prevJobs, job ])
+            jobs: [...props.currentJobs]
         })
+    }, [props.currentJobs])
+
+    const handleSwipe = async (job) => {
+        props.setCurrentJobs(prevJobs => [ ...prevJobs, job ])
     }
 
     const handleSwipeRight = async (job) => {

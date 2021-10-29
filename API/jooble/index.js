@@ -21,7 +21,7 @@ const getJoobleData = async (setJoobleJobs) => {
             const json = JSON.parse(http.responseText).jobs
             json.forEach(job => { 
                 job.description = job.snippet.replace(/<\/?[^>]+(>|$)/g, "").replace('&nbsp;', '')
-                job.snipper = null
+                job.snippet = null
             })
             setJoobleJobs(json)
         }
