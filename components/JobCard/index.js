@@ -27,7 +27,7 @@ const JobCard = props => {
         <Box>
           <AspectRatio ratio={16 / 9}>
             <Image
-              source={{ uri: props.job.company.logoUrl ? props.job.company.logoUrl : 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'}}
+              source={{ uri: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'}}
               alt="image"
             />
           </AspectRatio>
@@ -35,7 +35,7 @@ const JobCard = props => {
         <Stack p="4" space={3}>
           <Stack space={2}>
             <Heading size="lg" ml="-1">
-              {props.job.title}
+              {props.job.position}
             </Heading>
             <Divider />
             <Heading size="md" ml="-1">
@@ -45,11 +45,10 @@ const JobCard = props => {
               {props.job.location}
             </Heading>
           </Stack>
-          
           <HStack alignItems="center" space={4} justifyContent="space-between">
             <HStack alignItems="center">
               <Text color="gray.500" fontWeight="400">
-                {getTimeSince(new Date(props.job.updated))}
+                {getTimeSince(new Date(props.job.date))}
               </Text>
             </HStack>
           </HStack>

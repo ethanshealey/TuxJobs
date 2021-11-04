@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react'
 import JobCard from '../JobCard'
-import { HStack, Stack, Center, Text, Button, IconButton, Spinner } from 'native-base'
+import { HStack, Stack, Center, Text, Button, IconButton, Spinner, Input, VStack } from 'native-base'
 import CardStack, { Card } from 'react-native-card-stack-swiper'
 import { StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import { db } from '../../firebase.js'
 const JobSwipe = props => {
 
     const [ swiper, setSwiper ] = useState(null)
+    const [ query, setQuery ] = useState('')
+    const [ location, setLocation ] = useState('')
 
     useEffect(() => {
         props.currentJobs.forEach(job => {
@@ -36,24 +38,38 @@ const JobSwipe = props => {
         handleSwipe(job)
     }
 
+    const onSearch = () => {
+        // handle search
+        props.search(query, location)
+    }
+
     return (
         <Center flex={1} px={3}>
+            <VStack space={1} alignItems="center" top="25">
+                <Center w="300">
+                    <Input onChangeText={(e) => setQuery(e)} placeholder="Search" isFullWidth/>
+                </Center>
+                <Center w="300">
+                    <Input onChangeText={(e) => setLocation(e)} placeholder="Location" isFullWidth/>
+                </Center>
+                <Button onPress={onSearch} w="300" isFullWidth>Search</Button>
+            </VStack>
             <CardStack style={styles.content} disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}} renderNoMoreCards={() => <Spinner size="lg" />}>
                 {props.jobs.map((job) => (
                     <Card key={job.id} onSwipedRight={() => handleSwipeRight(job)} onSwipedLeft={() => handleSwipeLeft(job)}>
-                        <JobCard job={job} key={job.id} />
+                        <JobCard job={job} />
                     </Card>
                 ))}
             </CardStack>
             <HStack space={3} alignItems="center">
-                    <IconButton
-                        icon={<Ionicons name="md-close-circle-sharp" size={60} color="red"/>}
-                        onPress={() => swiper.swipeLeft()}
-                    />
-                    <IconButton
-                        icon={<Ionicons name="checkmark-circle" size={60} color="green"/>}
-                        onPress={() => swiper.swipeRight()}
-                    />
+                <IconButton
+                    icon={<Ionicons name="md-close-circle-sharp" size={60} color="red"/>}
+                    onPress={() => swiper.swipeLeft()}
+                />
+                <IconButton
+                    icon={<Ionicons name="checkmark-circle" size={60} color="green"/>}
+                    onPress={() => swiper.swipeRight()}
+                />
             </HStack>
         </Center>
     )
@@ -64,7 +80,7 @@ const styles = StyleSheet.create({
         flex: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        top: '10%'
+        top: '0%'
     },
 })
 

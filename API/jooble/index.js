@@ -1,11 +1,10 @@
-var url = "https://jooble.org/api/";
-var key = "bbb588e7-a411-45bb-9236-8ad0a140e8a8";
-var params = "{ keywords: 'it', location: 'North Carolina'}"
 
-const getJoobleData = async (setJoobleJobs) => {
+import JobObject from "../JobObject";
+
+const getJoobleData = async (setJoobleJobs, query='', location='nc') => {
     var url = "https://jooble.org/api/";
     var key = "bbb588e7-a411-45bb-9236-8ad0a140e8a8";
-    var params = "{ keywords: 'entry frontend', location: 'NC'}"
+    var params = `{ keywords: '${query}', location: '${location}'}`
 
     //create xmlHttpRequest object
     var http = new XMLHttpRequest();
@@ -19,11 +18,12 @@ const getJoobleData = async (setJoobleJobs) => {
     http.onreadystatechange = function() {
         if(http.readyState == 4 && http.status == 200) {
             const json = JSON.parse(http.responseText).jobs
-            json.forEach(job => { 
-                job.description = job.snippet.replace(/<\/?[^>]+(>|$)/g, "").replace('&nbsp;', '')
-                job.snippet = null
+            const jobs = []
+            json.forEach((job) => { 
+                const joblisting = new JobObject(job.id, job.title, job.company, job.location, job.link, job.snippet, job.type, job.updated)
+                jobs.push(JSON.parse(JSON.stringify(joblisting)))
             })
-            setJoobleJobs(json)
+            setJoobleJobs(jobs)
         }
     }
     //Send request to the server

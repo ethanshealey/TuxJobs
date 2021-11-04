@@ -6,8 +6,10 @@ import Footer from '../Footer'
 import CardStack, { Card } from 'react-native-card-stack-swiper'
 import JobSwipe from '../JobSwipe'
 import HeaderBar from '../HeaderBar'
+import History from '../History'
 import Settings from '../Settings'
 import { getJoobleData } from '../../API/jooble'
+import { getUsaJobsData } from '../../API/usajobs/index.js'
 
 const Dashboard = props => {
 
@@ -23,7 +25,7 @@ const Dashboard = props => {
     useEffect(() => { getCurrentUser() }, [])
 
     useEffect(() => { 
-        getJoobleData(setJobs)
+        getJoobleData(setJobs).then(getUsaJobsData(setJobs))
      }, [])
 
     const getCurrentUser = async () => {
@@ -39,6 +41,12 @@ const Dashboard = props => {
         setIsLoaded(true)
     }
 
+    const search = async (query, location) => {
+        setIsLoaded(false)
+        getJoobleData(setJobs, query, location).then(getUsaJobsData(setJobs, query, location))
+        setIsLoaded(true)
+    } 
+
     return (
         <>
             { isLoaded ? 
@@ -47,8 +55,8 @@ const Dashboard = props => {
                     <HeaderBar />
                     <Center flex={1}>
                     { 
-                        selected === 0 ? <>History</> :
-                        selected === 1 ? <JobSwipe jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
+                        selected === 0 ? <History jobs={jobs}/> :
+                        selected === 1 ? <JobSwipe search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
                         selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} /> : <>ERROR</>
                     }
                     </Center>
