@@ -83,7 +83,7 @@ const Login = props => {
                 alignSelf="flex-end"
                 mt="1"
                 onPress={() => setShowResetPassword(true)}>
-                Forget Password?
+                Forgot Password?
               </Link>
             </FormControl>
             <Button onPress={onLogin} mt="2" colorScheme="indigo" _text={{ color: 'white' }}>
