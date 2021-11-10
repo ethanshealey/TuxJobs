@@ -18,7 +18,7 @@ import { MaterialCommunityIcons, MaterialIcons, AntDesign, Entypo } from '@expo/
 const Footer = props => {
 
     return (
-        <HStack bg="indigo.600" alignItems="center" safeAreaBottom shadow={6}>
+        <HStack bg="#3FA9CA" alignItems="center" safeAreaBottom shadow={6}>
           <Pressable
             opacity={props.selected === 0 ? 1 : 0.5}
             py="3"
