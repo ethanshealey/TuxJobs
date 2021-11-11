@@ -11,7 +11,7 @@ import {
   Stack,
   Divider
 } from 'native-base';
-import { getTimeSince } from "../../CustomDate";
+import { getTimeSince, getTimeColorValue } from "../../CustomDate";
 
 const JobCard = props => {
 
@@ -47,7 +47,7 @@ const JobCard = props => {
           </Stack>
           <HStack alignItems="center" space={4} justifyContent="space-between">
             <HStack alignItems="center">
-              <Text color="gray.500" fontWeight="400">
+              <Text color="gray.500" fontWeight="400" style={{ color: getTimeColorValue(new Date(props.job.date)) }}>
                 {getTimeSince(new Date(props.job.date))}
               </Text>
             </HStack>
