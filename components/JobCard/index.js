@@ -24,9 +24,9 @@ const JobCard = props => {
         overflow="hidden"
         width="72"
         shadow={1}
-        _light={{ backgroundColor: 'gray.50' }}
+        _light={{ backgroundColor: 'gray.100' }}
         _dark={{ backgroundColor: 'gray.700' }}
-        style={{ borderWidth: .25, borderColor: '#dedede' }}
+        style={{ borderWidth: .25, borderColor: '#137D84' }}
       >
         <Box>
           <AspectRatio ratio={16 / 9}>
