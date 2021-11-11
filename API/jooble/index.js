@@ -20,7 +20,8 @@ const getJoobleData = async (setJoobleJobs, query='', location='nc') => {
             const json = JSON.parse(http.responseText).jobs
             const jobs = []
             json.forEach((job) => { 
-                const joblisting = new JobObject(job.id, job.title, job.company, job.location, job.link, job.snippet, job.type, job.updated)
+                const id = Date.now().toString(36) + Math.random().toString(36).substr(2)
+                const joblisting = new JobObject(id, job.title, job.company, job.location, job.link, job.snippet, job.type, job.updated)
                 jobs.push(JSON.parse(JSON.stringify(joblisting)))
             })
             setJoobleJobs(jobs)

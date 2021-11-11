@@ -55,7 +55,7 @@ const Dashboard = props => {
                     <HeaderBar />
                     <Center flex={1}>
                     { 
-                        selected === 0 ? <History jobs={jobs} user={props.user} id={id}/> :
+                        selected === 0 ? <History jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
                         selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} /> : <>ERROR</>
                     }

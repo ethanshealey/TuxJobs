@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Heading,
@@ -15,6 +15,9 @@ import { getTimeSince, getTimeColorValue } from "../../CustomDate";
 
 const JobCard = props => {
 
+  // 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'
+  // 'https://logo.clearbit.com/' + props.job.company.replaceAll(' ', '') + '.com?size=500'
+
     return (
         <Box
         rounded="lg"
@@ -23,11 +26,13 @@ const JobCard = props => {
         shadow={1}
         _light={{ backgroundColor: 'gray.50' }}
         _dark={{ backgroundColor: 'gray.700' }}
+        style={{ borderWidth: .25, borderColor: '#dedede' }}
       >
         <Box>
           <AspectRatio ratio={16 / 9}>
             <Image
-              source={{ uri: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'}}
+              source={{ uri: 'https://logo.clearbit.com/' + props.job.company.replaceAll(' ', '') + '.com?size=500' }}
+              fallbackSource={{ uri: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png' }}
               alt="image"
             />
           </AspectRatio>
@@ -41,9 +46,9 @@ const JobCard = props => {
             <Heading size="md" ml="-1">
               {props.job.company}
             </Heading>
-            <Heading size="sm" ml="-1">
+            <Text fontSize="md" ml="-1">
               {props.job.location}
-            </Heading>
+            </Text>
           </Stack>
           <HStack alignItems="center" space={4} justifyContent="space-between">
             <HStack alignItems="center">
