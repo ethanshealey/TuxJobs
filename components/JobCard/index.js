@@ -18,6 +18,7 @@ const JobCard = props => {
   // 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png'
   // 'https://logo.clearbit.com/' + props.job.company.replaceAll(' ', '') + '.com?size=500'
 
+<<<<<<< Updated upstream
     return (
         <Box
         rounded="lg"
@@ -48,18 +49,50 @@ const JobCard = props => {
             </Heading>
             <Text fontSize="md" ml="-1">
               {props.job.location}
-            </Text>
-          </Stack>
-          <HStack alignItems="center" space={4} justifyContent="space-between">
-            <HStack alignItems="center">
-              <Text color="gray.500" fontWeight="400" style={{ color: getTimeColorValue(new Date(props.job.date)) }}>
-                {getTimeSince(new Date(props.job.date))}
-              </Text>
-            </HStack>
-          </HStack>
-        </Stack>
+=======
+  return (
+      <Box
+      rounded="lg"
+      overflow="hidden"
+      width="72"
+      shadow={1}
+      _light={{ backgroundColor: 'gray.50' }}
+      _dark={{ backgroundColor: 'gray.700' }}
+      style={{ borderWidth: .25, borderColor: '#dedede' }}
+    >
+      <Box>
+        <AspectRatio ratio={16 / 9}>
+          <Image
+            source={{ uri: 'https://logo.clearbit.com/' + props.job.company.replaceAll(' ', '') + '.com?size=500' }}
+            fallbackSource={{ uri: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png' }}
+            alt="image"
+          />
+        </AspectRatio>
       </Box>
-    )
+      <Stack p="4" space={3}>
+        <Stack space={2}>
+          <Heading size="lg" ml="-1">
+            {props.job.position}
+          </Heading>
+          <Divider />
+          <Heading size="md" ml="-1">
+            {props.job.company}
+          </Heading>
+          <Text fontSize="md" ml="-1">
+            {props.job.location}
+          </Text>
+        </Stack>
+        <HStack alignItems="center" space={4} justifyContent="space-between">
+          <HStack alignItems="center">
+            <Text color="gray.500" fontWeight="400" style={{ color: getTimeColorValue(new Date(props.job.date)) }}>
+              {getTimeSince(new Date(props.job.date))}
+>>>>>>> Stashed changes
+            </Text>
+          </HStack>
+        </HStack>
+      </Stack>
+    </Box>
+  )
 }
 
 export default JobCard
