@@ -10,6 +10,7 @@ import {
   Input,
   Link,
   Button,
+  Center,
   Icon,
   IconButton,
   HStack,
@@ -21,11 +22,12 @@ const ResetPassword = props => {
 
 
     return (
+      <Center flex={.65} px={3}>
         <Box safeArea p="2" py="8" w="90%" mx="auto">
-          <Heading size="lg" fontWeight="600" color="coolGray.800">
+          <Heading size="lg" fontWeight="600" color="#fff">
             Reset your password
           </Heading>
-          <Heading mt="1" color="coolGray.600" fontWeight="medium" size="xs">
+          <Heading mt="1" color="#fff" fontWeight="medium" size="xs">
             Enter your email to continue
           </Heading>
 
@@ -33,26 +35,27 @@ const ResetPassword = props => {
             <FormControl>
               <FormControl.Label
                 _text={{
-                  color: 'coolGray.800',
+                  color: '#fff',
                   fontSize: 'xs',
                   fontWeight: 500,
                 }}>
                 Email 
               </FormControl.Label>
-              <Input placeholder="Email" value={props.email} onChangeText={(e) => props.setEmail(e)} />
+              <Input variant="filled" bg="#fff" placeholderTextColor="#3FA9CA" color="#3FA9CA" placeholder="Email" value={props.email} onChangeText={(e) => props.setEmail(e)} />
               <Link
-                _text={{ fontSize: 'xs', fontWeight: '500', color: 'indigo.500' }}
+                _text={{ fontSize: 'xs', fontWeight: '500', color: '#fff' }}
                 alignSelf="flex-end"
                 mt="1"
                 onPress={() => props.setShowResetPassword(false)}>
                 Back
               </Link>
             </FormControl>
-            <Button onPress={props.resetPassword} mt="2" colorScheme="indigo" _text={{ color: 'white' }}>
+            <Button style={{ borderRadius: 100 }} bg="#fff" onPress={props.resetPassword} mt="2" colorScheme="indigo" _text={{ color: '#3FA9CA' }}>
               Reset Password
             </Button>
           </VStack>
         </Box>
+      </Center>
     )
 }
 

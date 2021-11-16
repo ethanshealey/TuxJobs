@@ -21,7 +21,9 @@ const getJoobleData = async (setJoobleJobs, query='', location='nc') => {
             const jobs = []
             json.forEach((job) => { 
                 const id = Date.now().toString(36) + Math.random().toString(36).substr(2)
-                const joblisting = new JobObject(id, job.title, job.company, job.location, job.link, job.snippet, job.type, job.updated)
+                const logo = 'https://logo.clearbit.com/' + job.company.replace(' ', '') + '.com?size=500'
+                const desc = job.snippet.replace( /(<([^>]+)>)/ig, '').replace('...', '').replace(']]>', '').replace('&nbsp;', '')
+                const joblisting = new JobObject(id, job.title, job.company, job.location, job.link, desc, job.type, job.updated, logo)
                 jobs.push(JSON.parse(JSON.stringify(joblisting)))
             })
             setJoobleJobs(jobs)

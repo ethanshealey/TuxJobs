@@ -11,7 +11,7 @@ const getTimeColorValue = (date) => {
     let time = getTimeSince(date)
     const timeunit = time.split(" ")[1]
     if (timeunit === "minute" || timeunit === "minutes" || timeunit === "second" || timeunit === "seconds" || timeunit === "hour" || timeunit === "hours") 
-        return "green"
+        return "green" 
     else if(timeunit === "day" || timeunit === "days") 
         return "#db6e14"
     else

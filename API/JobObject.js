@@ -1,6 +1,6 @@
 
 export default class JobObject {
-  constructor(id, position, company, location, url, description, type, date) {
+  constructor(id, position, company, location, url, description, type, date, logo) {
     this.id = id;
     this.position = position;
     this.company = company;
@@ -9,5 +9,6 @@ export default class JobObject {
     this.description = description;
     this.type = type;
     this.date = date;
+    this.logo = logo
   }
 }

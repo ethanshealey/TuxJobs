@@ -9,7 +9,8 @@ import HeaderBar from '../HeaderBar'
 import History from '../History'
 import Settings from '../Settings'
 import { getJoobleData } from '../../API/jooble'
-import { getUsaJobsData } from '../../API/usajobs/index.js'
+import { getUsaJobsData } from '../../API/usajobs'
+import JobModal from '../JobModal'
 
 const Dashboard = props => {
 
@@ -20,6 +21,8 @@ const Dashboard = props => {
     const [ selected, setSelected ] = useState(1)
     const [ currentJobs, setCurrentJobs ] = useState([])
     const [ jobs, setJobs ] = useState([])
+    const [ showJobModal, setShowJobModal ] = useState(false)
+    const [ modalJob, setModalJob ] = useState({})
 
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
@@ -47,16 +50,22 @@ const Dashboard = props => {
         setIsLoaded(true)
     } 
 
+    const openJobModal = (job) => {
+        setShowJobModal(true)
+        setModalJob(job)
+    }
+
     return (
         <>
             { isLoaded ? 
                 
                 <Box flex={1} bg="white" safeAreaTop>
+                    <JobModal job={modalJob} isOpen={showJobModal} setIsOpen={setShowJobModal} />
                     <HeaderBar />
                     <Center flex={1}>
                     { 
-                        selected === 0 ? <History jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
-                        selected === 1 ? <JobSwipe search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
+                        selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
+                        selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
                         selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} /> : <>ERROR</>
                     }
                     </Center>

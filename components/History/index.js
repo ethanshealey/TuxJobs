@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Spacer, Icon, IconButton, View, Box, Header, VStack, Center, Button, Text, Link, Pressable , HStack, Select} from 'native-base'
+import { ScrollView, Spinner, Spacer, Icon, IconButton, View, Box, Header, VStack, Center, Button, Text, Link, Pressable , HStack, Select} from 'native-base'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { getTimeSince, getTimeColorValue } from '../../CustomDate';
 import { StyleSheet } from 'react-native'
@@ -9,15 +9,19 @@ import { db } from '../../firebase'
 const History = props => {
 
     const [ history, setHistory ] = useState([])
+    const [ isLoading, setIsLoading ] = useState(true)
     const [ showLikedJobs, setShowLikedJobs ] = useState(true)
     const [ showDislikedJobs, setShowDislikedJobs ] = useState(true)
 
     useEffect(() => { 
+        setIsLoading(true)
         db.collection('Users').where('uid', '==', props.user.uid).get().then((qs) => {
             qs.forEach((doc) => {
                 setHistory(doc.data().jobs)
             })
         })
+        setHistory([...history.reverse()])
+        setIsLoading(false)
      }, [])
 
     useEffect(() => {
@@ -32,6 +36,12 @@ const History = props => {
     }
 
     return (
+        <>
+        { isLoading ? 
+        <Center flex={1} px={3}>
+            <Spinner size="lg" /> 
+        </Center>
+        :
         <ScrollView isFullWidth>
             <SwipeListView
                 ListHeaderComponent={() => (
@@ -43,21 +53,23 @@ const History = props => {
                 style={styles.joblist}
                 data={history}
                 isFullWidth
-                renderItem={(job, ) => (
+                renderItem={(job) => (
                     <Box style={[styles.listitem, job.index % 2 === 0 && styles.nthItem]}
                         pl="4"
                         pr="5"
                         py="2"
                     > 
-                        <HStack alignItems="center" space={3}>
-                            <VStack>
-                                <Text bold isTruncated maxW="300" fontSize="xl">{job.item.position}</Text>
-                                <Text bold isTruncated maxW="300">{job.item.company}</Text>
-                                <Text>{job.item.location}</Text>
-                            </VStack>
-                            <Spacer />
-                            <Text alignSelf="flex-start" style={{ color: getTimeColorValue(new Date(job.item.date)) }}>{getTimeSince(new Date(job.item.date))}</Text>
-                        </HStack>
+                        <Pressable onPress={() => props.openJobModal(job.item)}>
+                            <HStack alignItems="center" space={3}>
+                                <VStack>
+                                    <Text bold isTruncated maxW="300" fontSize="xl">{job.item.position}</Text>
+                                    <Text bold isTruncated maxW="300">{job.item.company}</Text>
+                                    <Text>{job.item.location}</Text>
+                                </VStack>
+                                <Spacer />
+                                <Text alignSelf="flex-start" style={{ color: getTimeColorValue(new Date(job.item.date)) }}>{getTimeSince(new Date(job.item.date))}</Text>
+                            </HStack>
+                        </Pressable>
                     </Box>
                 )}
                 renderHiddenItem={(job, rowMap) => (
@@ -87,7 +99,10 @@ const History = props => {
                 )}
                 rightOpenValue={-100}
             />
-        </ScrollView>
+        </ScrollView> 
+        
+        }
+    </>
     )   
 }
 

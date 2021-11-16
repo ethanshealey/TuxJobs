@@ -4,10 +4,12 @@ import {
   NativeBaseProvider,
   Box,
   Text,
+  View,
   Heading,
   VStack,
   FormControl,
   Input,
+  Center,
   Link,
   Button,
   Icon,
@@ -16,6 +18,7 @@ import {
   Divider,
 } from 'native-base';
 import { auth, db } from '../../firebase.js' 
+import { ImageBackground } from 'react-native';
 
 const Register = props => {
 
@@ -53,7 +56,73 @@ const Register = props => {
     }
 
     return (
-        <Box safeArea p="2" w="90%" mx="auto" py="8">
+        <View>
+        <ImageBackground source={require('../../assets/signupbg.png')} style={{width: '105%', height: '100%', left: '-5%'}}>
+          <Center flex={3} px={3} style={{ top: 75 }}>
+            <Box safeArea p="2" py="8" w="90%" mx="auto">
+            <Heading size="lg" color="#fff" fontWeight="600">
+            Welcome to TuxJobs
+            </Heading>
+            <Heading mt="1" color="#fff" fontWeight="medium" size="xs">
+            Sign up to continue!
+            </Heading>
+
+            <VStack space={3} mt="5">
+            <FormControl>
+            <FormControl.Label
+                _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
+                Username
+                </FormControl.Label>
+                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Username" value={username} onChangeText={(e) => setUsername(e)} />
+            </FormControl>
+            <FormControl>
+                <FormControl.Label
+                _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
+                Email
+                </FormControl.Label>
+                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Email" value={email} onChangeText={(e) => setEmail(e)} />
+            </FormControl>
+            <FormControl>
+                <FormControl.Label
+                _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
+                Password
+                </FormControl.Label>
+                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Password" value={password} onChangeText={(e) => setPassword(e)} type="password" />
+            </FormControl>
+            <FormControl>
+                <FormControl.Label
+                _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
+                Confirm Password
+                </FormControl.Label>
+                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Confirm Password" value={confirmPassword} onChangeText={(e) => setConfirmPassword(e)} type="password" />
+            </FormControl>
+            <Button style={{ borderRadius: 100 }} bg="#fff" onPress={onRegister} mt="2" _text={{ color: '#3FA9CA' }}>
+                Sign up
+            </Button>
+            <HStack mt="6" justifyContent="center">
+                <Text fontSize="sm" color="#fff" fontWeight={400}>
+                I'm already a user.{' '}
+                </Text>
+                <Link
+                _text={{
+                    color: '#fff',
+                    fontWeight: 'medium',
+                    fontSize: 'sm',
+                }}
+                onPress={() => props.setShowLogin(true)}>
+                Login
+                </Link>
+            </HStack>
+            </VStack>
+            </Box>
+          </Center>
+        </ImageBackground>
+    </View>
+    );
+
+    /*
+    return (
+        <Box safeArea p="0" w="100%" mx="auto">
             <Heading size="lg" color="coolGray.800" fontWeight="600">
             Welcome to TuxJobs
             </Heading>
@@ -109,7 +178,7 @@ const Register = props => {
             </HStack>
             </VStack>
         </Box>
-    );
+    );*/
 }
 
 export default Register

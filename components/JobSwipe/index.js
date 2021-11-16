@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react'
 import JobCard from '../JobCard'
-import { HStack, Stack, Center, Text, Button, IconButton, Spinner, Input, VStack } from 'native-base'
+import { HStack, Stack, Center, Text, Button, Pressable, IconButton, Spinner, Input, VStack } from 'native-base'
 import CardStack, { Card } from 'react-native-card-stack-swiper'
 import { StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -14,7 +14,7 @@ const JobSwipe = props => {
 
     useEffect(() => {
         props.currentJobs.forEach(job => {
-            props.setJobs(prevJobs => prevJobs.filter(j => j.id !== job.id))
+            props.setJobs(prevJobs => prevJobs.filter(j => (j.position != job.position) && (j.company != job.company) && (j.date != job.date)))
         })
     }, [])
 
@@ -26,6 +26,7 @@ const JobSwipe = props => {
 
     const handleSwipe = async (job) => {
         props.setCurrentJobs(prevJobs => [ ...prevJobs, job ])
+        console.log('added job', props.currentJobs.length)
     }
 
     const handleSwipeRight = async (job) => {
@@ -57,17 +58,19 @@ const JobSwipe = props => {
             <CardStack style={styles.content} disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}} renderNoMoreCards={() => <Spinner size="lg" />}>
                 {props.jobs.map((job) => (
                     <Card key={job.id} onSwipedRight={() => handleSwipeRight(job)} onSwipedLeft={() => handleSwipeLeft(job)}>
-                        <JobCard job={job} />
+                        <Pressable onPress={() => props.openJobModal(job)}>
+                            <JobCard job={job} />
+                        </Pressable>
                     </Card>
                 ))}
             </CardStack>
-            <HStack space={3} alignItems="center">
+            <HStack space={45} alignItems="center">
                 <IconButton
-                    icon={<Ionicons name="md-close-circle-sharp" size={60} color="red"/>}
+                    icon={<Ionicons name="md-close-circle-sharp" size={80} color="red"/>}
                     onPress={() => swiper.swipeLeft()}
                 />
                 <IconButton
-                    icon={<Ionicons name="checkmark-circle" size={60} color="green"/>}
+                    icon={<Ionicons name="checkmark-circle" size={80} color="green"/>}
                     onPress={() => swiper.swipeRight()}
                 />
             </HStack>
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
         flex: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        top: '0%'
+        top: '5%'
     },
 })
 

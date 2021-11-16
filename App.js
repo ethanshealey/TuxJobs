@@ -7,7 +7,7 @@ import Dashboard from './components/Dashboard'
 
 const App = () => {
 
-  const [ user, setUser ] = useState(null)
+  const [ user, setUser ] = useState(1)
   const [ hasLoaded, setHasLoaded ] = useState(false)
   
 
