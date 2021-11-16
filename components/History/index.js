@@ -35,7 +35,7 @@ const History = props => {
     }, [props.currentJobs])
 
     const deleteRow = async (k) => {
-        setAllJobs(history.filter((job) => job.id !== k))
+        setAllJobs(allJobs.filter((job) => job.id !== k))
         props.setCurrentJobs(props.currentJobs.filter((job) => job.id !== k))
     }
 
