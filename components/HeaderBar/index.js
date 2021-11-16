@@ -19,7 +19,7 @@ import { MaterialCommunityIcons, MaterialIcons, AntDesign, Entypo, FontAwesome5 
 const HeaderBar = props => {
 
     return (
-        <HStack bg="#3FA9CA" alignItems="center" height="10" safeAreaTop shadow={6}>
+        <HStack bg="#3E76C9" alignItems="center" height="10" safeAreaTop shadow={6}>
           <Pressable>
             <Center flex={1} px={3}>
               <Icon viewBox="-2500 -1500 2500 2000" top="-20">

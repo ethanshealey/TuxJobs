@@ -8,21 +8,25 @@ import { db } from '../../firebase'
 
 const History = props => {
 
+    const [ allJobs, setAllJobs ] = useState([])
     const [ history, setHistory ] = useState([])
     const [ isLoading, setIsLoading ] = useState(true)
     const [ showLikedJobs, setShowLikedJobs ] = useState(true)
-    const [ showDislikedJobs, setShowDislikedJobs ] = useState(true)
 
     useEffect(() => { 
         setIsLoading(true)
         db.collection('Users').where('uid', '==', props.user.uid).get().then((qs) => {
             qs.forEach((doc) => {
-                setHistory(doc.data().jobs)
+                setAllJobs(doc.data().jobs)
             })
         })
-        setHistory([...history.reverse()])
+        setAllJobs([...allJobs.reverse()])
         setIsLoading(false)
      }, [])
+
+    useEffect(() => {
+        showLikedJobs ? setHistory([...allJobs.filter(job => job.liked)]) : setHistory([...allJobs.filter(job => !job.liked)])
+    }, [allJobs, showLikedJobs])
 
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
@@ -31,7 +35,7 @@ const History = props => {
     }, [props.currentJobs])
 
     const deleteRow = async (k) => {
-        setHistory(history.filter((job) => job.id !== k))
+        setAllJobs(history.filter((job) => job.id !== k))
         props.setCurrentJobs(props.currentJobs.filter((job) => job.id !== k))
     }
 
@@ -46,8 +50,8 @@ const History = props => {
             <SwipeListView
                 ListHeaderComponent={() => (
                     <HStack style={styles.filters}>
-                        <Pressable onPress={() => setShowLikedJobs(!showLikedJobs)} style={styles.filterBtn}><Center flex={1} px={3}><AntDesign name="check" size={60} color={ showLikedJobs ? "green" : "gray"} /></Center></Pressable>
-                        <Pressable onPress={() => setShowDislikedJobs(!showDislikedJobs)} style={styles.filterBtn}><Center flex={1} px={3}><Feather name="x" size={60} color={showDislikedJobs ? "red" : "gray"} /></Center></Pressable>
+                        <Pressable onPress={() => setShowLikedJobs(true)} style={styles.filterBtn}><Center flex={1} px={3}><AntDesign name="check" size={60} color={ showLikedJobs ? "green" : "gray"} /></Center></Pressable>
+                        <Pressable onPress={() => setShowLikedJobs(false)} style={styles.filterBtn}><Center flex={1} px={3}><Feather name="x" size={60} color={!showLikedJobs ? "red" : "gray"} /></Center></Pressable>
                     </HStack>
                 )}
                 style={styles.joblist}
