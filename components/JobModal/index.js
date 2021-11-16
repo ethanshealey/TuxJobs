@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import {Alert, Linking} from 'react-native'
 import { Modal, ScrollView, Image, Text, Button, Divider, HStack, AspectRatio, VStack, Spacer } from 'native-base'
 
 const JobModal = props => {
+    const handlePress = useCallback(async () => {
+        const supported = await Linking.canOpenURL(props.jobs?.url);
+
+        if (supported) {
+            await Linking.openURL(props.jobs?.url);
+        } else {
+            Alert.alert(`Dont know how to open this URL: ${props.jobs?.url}`);
+        }
+    }, [props.jobs?.url])
+
     return (
         <Modal
             size={'xl'}
@@ -41,8 +52,8 @@ const JobModal = props => {
                         variant='ghost'
                         onPress={() => props.setIsOpen(false)}
                     >Cancel</Button>
-                    <Button>Apply</Button>
-                </Button.Group>
+                    <Button onPress = {handlePress} >Apply</Button>
+                </Button.Group> 
             </Modal.Footer>
             </Modal.Content>
         </Modal>
