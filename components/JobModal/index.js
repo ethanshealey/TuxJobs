@@ -3,15 +3,16 @@ import {Alert, Linking} from 'react-native'
 import { Modal, ScrollView, Image, Text, Button, Divider, HStack, AspectRatio, VStack, Spacer } from 'native-base'
 
 const JobModal = props => {
+
     const handlePress = useCallback(async () => {
-        const supported = await Linking.canOpenURL(props.jobs?.url);
+        const supported = await Linking.canOpenURL(props.job?.url);
 
         if (supported) {
-            await Linking.openURL(props.jobs?.url);
+            await Linking.openURL(props.job?.url);
         } else {
-            Alert.alert(`Dont know how to open this URL: ${props.jobs?.url}`);
+            Alert.alert(`Dont know how to open this URL: ${props.job?.url}`);
         }
-    }, [props.jobs?.url])
+    }, [props.job?.url])
 
     return (
         <Modal
