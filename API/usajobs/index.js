@@ -17,9 +17,9 @@ const getUsaJobsData = async (setJobs, query='', location='nc') => {
       .then(data => {
           const jobs = []
           data.SearchResult.SearchResultItems.forEach(job => {
-              const id = Date.now().toString(36) + Math.random().toString(36).substr(2)
+              const id = Date.now().toString() + Math.random().toString().substr(2)
               const logo = 'https://logo.clearbit.com/' + job.MatchedObjectDescriptor.OrganizationName.replaceAll(' ', '') + '.com?size=500'
-              const desc = job.MatchedObjectDescriptor.PositionFormattedDescription[0].LabelDescription.replace( /(<([^>]+)>)/ig, '').replace('...', '').replace(']]>', '').replace('&nbsp;', '')
+              const desc = job.MatchedObjectDescriptor.PositionFormattedDescription[0].LabelDescription.replace( /(<([^>]+)>)/ig, '').replace(/\.{3}/gm, '').replace(']]>', '').replace(/&nbsp;/gm, '')
               const joblisting = new JobObject(id, job.MatchedObjectDescriptor.PositionTitle, job.MatchedObjectDescriptor.OrganizationName, job.MatchedObjectDescriptor.PositionLocation.length > 1 ? 'Multiple Locations' : job.MatchedObjectDescriptor.PositionLocation[0]?.name, job.MatchedObjectDescriptor.PositionURI, desc, job.MatchedObjectDescriptor.PositionSchedule[0].Name, job.MatchedObjectDescriptor.PublicationStartDate, logo)
               jobs.push(JSON.parse(JSON.stringify(joblisting)))
           })

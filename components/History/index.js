@@ -48,6 +48,8 @@ const History = props => {
         :
         <ScrollView isFullWidth>
             <SwipeListView
+                disableRightSwipe
+                horizontal={false}
                 ListHeaderComponent={() => (
                     <HStack style={styles.filters}>
                         <Pressable onPress={() => setShowLikedJobs(true)} style={styles.filterBtn}><Center flex={1} px={3}><AntDesign name="check" size={60} color={ showLikedJobs ? "green" : "gray"} /></Center></Pressable>
@@ -66,8 +68,8 @@ const History = props => {
                         <Pressable onPress={() => props.openJobModal(job.item)}>
                             <HStack alignItems="center" space={3}>
                                 <VStack>
-                                    <Text bold isTruncated maxW="300" fontSize="xl">{job.item.position}</Text>
-                                    <Text bold isTruncated maxW="300">{job.item.company}</Text>
+                                    <Text bold isTruncated maxW="250" fontSize="xl">{job.item.position}</Text>
+                                    <Text bold isTruncated maxW="250">{job.item.company}</Text>
                                     <Text>{job.item.location}</Text>
                                 </VStack>
                                 <Spacer />
