@@ -72,7 +72,7 @@ const Login = props => {
                     }}>
                     Email 
                   </FormControl.Label>
-                  <Input variant="filled" bg="#fff" placeholder="Email" placeholderTextColor="#3FA9CA" color="#3FA9CA" value={email} onChangeText={(e) => setEmail(e)} />
+                  <Input variant="filled" bg="#fff" placeholder="Email" placeholderTextColor="#AEAEB2" color="#0d264d" value={email} onChangeText={(e) => setEmail(e)} />
                 </FormControl>
                 <FormControl>
                   <FormControl.Label
@@ -83,7 +83,7 @@ const Login = props => {
                     }}>
                       Password
                   </FormControl.Label>
-                  <Input variant="filled" bg="#fff" placeholder="Password" placeholderTextColor="#3FA9CA" color="#3FA9CA" value={password} onChangeText={(e) => setPassword(e)} type="password" />
+                  <Input variant="filled" bg="#fff" placeholder="Password" placeholderTextColor="#AEAEB2" color="#0d264d" value={password} onChangeText={(e) => setPassword(e)} type="password" />
                   <Link
                     _text={{ fontSize: 'xs', fontWeight: '500', color: '#fff' }}
                     alignSelf="flex-end"
@@ -92,8 +92,8 @@ const Login = props => {
                     Forgot Password?
                   </Link>
                 </FormControl>
-                <Button style={{ borderRadius: 100 }} onPress={onLogin} mt="2" bg="#fff" _text={{ color: '#3FA9CA' }}>
-                  Sign in
+                <Button style={{borderRadius: 100}} onPress={onLogin} mt="2" bg="#0d264d" _text={{ color: '#ffffff'}}>
+                  Sign In
                 </Button>
                 <HStack mt="2" justifyContent="center">
                   <Text fontSize="sm" color="#fff" fontWeight={400}>

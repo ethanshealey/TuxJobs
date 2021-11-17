@@ -58,7 +58,7 @@ const Register = props => {
     return (
         <View>
         <ImageBackground source={require('../../assets/signupbg.png')} style={{width: '105%', height: '100%', left: '-5%'}}>
-          <Center flex={3} px={3} style={{ top: 75 }}>
+          <Center flex={3} px={3} style={{ top: 45 }}>
             <Box safeArea p="2" py="8" w="90%" mx="auto">
             <Heading size="lg" color="#fff" fontWeight="600">
             Welcome to TuxJobs
@@ -73,30 +73,30 @@ const Register = props => {
                 _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
                 Username
                 </FormControl.Label>
-                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Username" value={username} onChangeText={(e) => setUsername(e)} />
+                <Input color="#0d264d" placeholderTextColor="#AEAEB2" bg="#fff" variant="filled" placeholder="Username" value={username} onChangeText={(e) => setUsername(e)} />
             </FormControl>
             <FormControl>
                 <FormControl.Label
                 _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
                 Email
                 </FormControl.Label>
-                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Email" value={email} onChangeText={(e) => setEmail(e)} />
+                <Input color="#0d264d" placeholderTextColor="#AEAEB2" bg="#fff" variant="filled" placeholder="Email" value={email} onChangeText={(e) => setEmail(e)} />
             </FormControl>
             <FormControl>
                 <FormControl.Label
                 _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
                 Password
                 </FormControl.Label>
-                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Password" value={password} onChangeText={(e) => setPassword(e)} type="password" />
+                <Input color="#0d264d" placeholderTextColor="#AEAEB2" bg="#fff" variant="filled" placeholder="Password" value={password} onChangeText={(e) => setPassword(e)} type="password" />
             </FormControl>
             <FormControl>
                 <FormControl.Label
                 _text={{ color: '#fff', fontSize: 'xs', fontWeight: 500 }}>
                 Confirm Password
                 </FormControl.Label>
-                <Input color="#3FA9CA" placeholderTextColor="#3FA9CA" bg="#fff" variant="filled" placeholder="Confirm Password" value={confirmPassword} onChangeText={(e) => setConfirmPassword(e)} type="password" />
+                <Input color="#0d264d" placeholderTextColor="#AEAEB2" bg="#fff" variant="filled" placeholder="Confirm Password" value={confirmPassword} onChangeText={(e) => setConfirmPassword(e)} type="password" />
             </FormControl>
-            <Button style={{ borderRadius: 100 }} bg="#fff" onPress={onRegister} mt="2" _text={{ color: '#3FA9CA' }}>
+            <Button style={{ borderRadius: 100, marginTop: 20 }} bg="#0d264d" onPress={onRegister} mt="2" _text={{ color: '#ffffff' }}>
                 Sign up
             </Button>
             <HStack mt="6" justifyContent="center">

@@ -59,7 +59,7 @@ const Dashboard = props => {
         <>
             { isLoaded ? 
                 
-                <Box flex={1} bg="white" safeAreaTop>
+                <Box flex={1} bg="gray.100" safeAreaTop>
                     <JobModal job={modalJob} isOpen={showJobModal} setIsOpen={setShowJobModal} />
                     <HeaderBar />
                     <Center flex={1}>

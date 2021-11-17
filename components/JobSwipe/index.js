@@ -3,7 +3,7 @@ import JobCard from '../JobCard'
 import { HStack, Stack, Center, Text, Button, Pressable, IconButton, Spinner, Input, VStack } from 'native-base'
 import CardStack, { Card } from 'react-native-card-stack-swiper'
 import { StyleSheet } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { db } from '../../firebase.js'
 
 const JobSwipe = props => {
@@ -46,14 +46,14 @@ const JobSwipe = props => {
 
     return (
         <Center flex={1} px={3}>
-            <VStack space={1} alignItems="center" top="25">
-                <Center w="300">
-                    <Input onChangeText={(e) => setQuery(e)} placeholder="Search" isFullWidth/>
+            <VStack space={1} alignItems="center" top="35">
+                <Center w="323">
+                    <Input onChangeText={(e) => setQuery(e)} bg="#ffffff" height="36px" marginTop="0px" placeholder="Search by title, skill, or company" isFullWidth/>
                 </Center>
-                <Center w="300">
-                    <Input onChangeText={(e) => setLocation(e)} placeholder="Location" isFullWidth/>
+                <Center w="323">
+                    <Input onChangeText={(e) => setLocation(e)} bg="#ffffff" height="36px" marginTop="3px" placeholder="Location" isFullWidth/>
                 </Center>
-                <Button onPress={onSearch} w="300" isFullWidth>Search</Button>
+                <Button style={{ borderRadius: 100, marginTop:8 }} bg="#3E76C9" onPress={onSearch} w="323" _text={{ color: '#ffffff' }} isFullWidth>Search</Button>
             </VStack>
             <CardStack style={styles.content} disableTopSwipe disableBottomSwipe ref={swiper => {setSwiper(swiper)}} renderNoMoreCards={() => <Spinner size="lg" />}>
                 {props.jobs.map((job) => (
@@ -64,13 +64,13 @@ const JobSwipe = props => {
                     </Card>
                 ))}
             </CardStack>
-            <HStack space={45} alignItems="center">
-                <IconButton
-                    icon={<Ionicons name="md-close-circle-sharp" size={80} color="red"/>}
+            <HStack space={30} alignItems="center" marginBottom="4" marginTop="4">
+                <IconButton bg="white" borderRadius="100" padding="3.5" 
+                    icon={<AntDesign name="close" size={45} color="red"/>}
                     onPress={() => swiper.swipeLeft()}
                 />
-                <IconButton
-                    icon={<Ionicons name="checkmark-circle" size={80} color="green"/>}
+                <IconButton bg="white" borderRadius="100" padding="3.5" 
+                    icon={<AntDesign name="check" size={45} color="green"/>}
                     onPress={() => swiper.swipeRight()}
                 />
             </HStack>

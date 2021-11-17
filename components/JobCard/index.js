@@ -19,9 +19,10 @@ const JobCard = props => {
       <Box
       rounded="lg"
       overflow="hidden"
-      width="72"
+      width="80"
+      height="400"
       shadow={1}
-      _light={{ backgroundColor: 'gray.100' }}
+      _light={{ backgroundColor: 'white' }}
       _dark={{ backgroundColor: 'gray.700' }}
     >
       <Box>
