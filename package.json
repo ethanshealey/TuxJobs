@@ -10,7 +10,7 @@
   "dependencies": {
     "@expo-google-fonts/bitter": "^0.2.0",
     "@expo-google-fonts/viga": "^0.2.0",
-    "expo": "~42.0.1",
+    "expo": "^42.0.5",
     "expo-font": "~9.2.1",
     "expo-status-bar": "~1.0.4",
     "firebase": "8.2.3",

@@ -9,6 +9,8 @@ import {
     Text,
     Spacer,
     Center,
+    Button,
+    View,
     NativeBaseProvider,
   } from "native-base"
 
@@ -40,16 +42,25 @@ const Settings = props => {
     ]
 
     return (
-        <Box
-          w={{
-            base: "100%",
-            md: "25%",
-          }}    
-          top={0}
-        >
-            <Heading fontSize="xl" p="4" pb="3">
+        <View>
+            <Heading fontSize="xl" height="31" p="2" pb="4" marginTop="7" marginBottom="6" textAlign="center">
                 Settings
             </Heading>
+            <Box
+                rounded="lg"
+                height="35"
+                shadow={0}
+                _light={{ backgroundColor: 'white' }}
+                _dark={{ backgroundColor: 'gray.700' }}
+                style={{borderRadius: 100}}
+                alignSelf="center" 
+                mt="1"
+                mb="1"
+                bg="#cccccc"
+                width="370"
+            >   
+                <Text color="white" textAlign="left" marginTop="1.5" marginLeft="8">USER SETTINGS</Text>
+            </Box>
             <FlatList
                 data={data}
                 renderItem={({ item }) => (
@@ -82,7 +93,23 @@ const Settings = props => {
                 )}
                 keyExtractor={(item) => item.id}
             />
+            <Box
+                rounded="lg"
+                overflow="hidden"
+                height="35"
+                shadow={1}
+                _light={{ backgroundColor: 'white' }}
+                _dark={{ backgroundColor: 'gray.700' }}
+                style={{borderRadius: 70}}
+                alignSelf="center" 
+                mt="1" 
+                bg="#cccccc"
+                width="370"
+                marginBottom="383"
+            >   
+                <Text color="white" textAlign="left" marginTop="1.5" marginLeft="8">APP SETTINGS</Text>
             </Box>
+        </View>
     )
 }
 
