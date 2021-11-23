@@ -47,12 +47,11 @@ const Settings = props => {
                 Settings
             </Heading>
             <Box
-                rounded="lg"
                 height="35"
                 shadow={0}
                 _light={{ backgroundColor: 'white' }}
                 _dark={{ backgroundColor: 'gray.700' }}
-                style={{borderRadius: 100}}
+                style={{borderRadius: 11}}
                 alignSelf="center" 
                 mt="1"
                 mb="1"
@@ -94,13 +93,12 @@ const Settings = props => {
                 keyExtractor={(item) => item.id}
             />
             <Box
-                rounded="lg"
                 overflow="hidden"
                 height="35"
                 shadow={1}
                 _light={{ backgroundColor: 'white' }}
                 _dark={{ backgroundColor: 'gray.700' }}
-                style={{borderRadius: 70}}
+                style={{borderRadius: 11}}
                 alignSelf="center" 
                 mt="1" 
                 bg="#cccccc"

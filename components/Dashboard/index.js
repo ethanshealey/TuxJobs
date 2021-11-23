@@ -46,8 +46,7 @@ const Dashboard = props => {
 
     const search = async (query, location) => {
         setIsLoaded(false)
-        getJoobleData(setJobs, query, location).then(getUsaJobsData(setJobs, query, location))
-        setIsLoaded(true)
+        getJoobleData(setJobs, query, location).then(getUsaJobsData(setJobs, query, location)).then(() => {setIsLoaded(true)})
     } 
 
     const openJobModal = (job) => {

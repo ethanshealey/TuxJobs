@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NativeBaseProvider, Spinner, Center, extendTheme } from 'native-base';
 import { auth } from './firebase.js'
+import { StatusBar } from 'react-native'
 
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
@@ -28,6 +29,7 @@ const Home = () => {
 
   return (
     <>
+      <StatusBar backgroundColor="#3E76C9" barStyle="light-content" />
       { 
           // if the user is null, show the Auth page and wait until the user signs in
           hasLoaded ? 

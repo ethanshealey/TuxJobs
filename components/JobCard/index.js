@@ -20,7 +20,7 @@ const JobCard = props => {
       rounded="lg"
       overflow="hidden"
       width="80"
-      height="400"
+      height={props.height}
       shadow={1}
       _light={{ backgroundColor: 'white' }}
       _dark={{ backgroundColor: 'gray.700' }}

@@ -39,6 +39,11 @@ const History = props => {
         props.setCurrentJobs(props.currentJobs.filter((job) => job.id !== k))
     }
 
+    const swapResponse = async (k) => {
+        setAllJobs(allJobs.map(job => job.id === k ? {...job, liked: !job.liked} : job ))
+        props.setCurrentJobs(props.currentJobs.map(job => job.id === k ? {...job, liked: !job.liked} : job ))
+    }
+
     return (
         <>
         { isLoading ? 
@@ -46,21 +51,25 @@ const History = props => {
             <Spinner size="lg" /> 
         </Center>
         :
-        <ScrollView isFullWidth>
+        <ScrollView isFullWidth keyboardShouldPersistTaps='handled'>
             <SwipeListView
                 disableRightSwipe
                 horizontal={false}
+                ListEmptyComponent={() => (
+                    <Center flex={1} h="10">
+                        <Text>You have no { showLikedJobs ? 'liked' : 'disliked' } jobs!</Text>
+                    </Center>
+                )}
                 ListHeaderComponent={() => (
                     <HStack style={styles.filters}>
                         <Pressable onPress={() => setShowLikedJobs(true)} style={styles.filterBtn}><Center flex={1} px={3}><AntDesign name="check" size={60} color={ showLikedJobs ? "green" : "gray"} /></Center></Pressable>
                         <Pressable onPress={() => setShowLikedJobs(false)} style={styles.filterBtn}><Center flex={1} px={3}><Feather name="x" size={60} color={!showLikedJobs ? "red" : "gray"} /></Center></Pressable>
                     </HStack>
                 )}
-                style={styles.joblist}
                 data={history}
                 isFullWidth
                 renderItem={(job) => (
-                    <Box style={[styles.listitem, job.index % 2 === 0 && styles.nthItem]}
+                    <Box style={[styles.listitem, job.index % 2 !== 0 && styles.nthItem]}
                         pl="4"
                         pr="5"
                         py="2"
@@ -83,10 +92,12 @@ const History = props => {
                         <Pressable
                             w="100"
                             ml="auto"
-                            bg="white"
+                            bg="#c0c1c2"
+                            onPress={() => swapResponse(job.item.id)}
                             justifyContent="center"
                         >
                             <VStack alignItems="center" space={2}>
+                                <Ionicons name="swap-horizontal" size={30} color="white" />
                             </VStack>
                         </Pressable>
                         <Pressable
@@ -98,12 +109,12 @@ const History = props => {
                             opacity: 0.5,
                             }}>
                             <VStack alignItems="center" space={2}>
-                            <Icon as={<MaterialIcons name="delete" />} color="white" size="md" />
+                                <Icon as={<MaterialIcons name="delete" />} color="white" size="md" />
                             </VStack>
                         </Pressable>
                     </HStack>
                 )}
-                rightOpenValue={-100}
+                rightOpenValue={-200}
             />
         </ScrollView> 
         

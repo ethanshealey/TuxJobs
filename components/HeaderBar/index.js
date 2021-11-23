@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Box,
-    Text,
-    Heading,
-    VStack,
-    FormControl,
-    Input,
-    Link,
-    Button,
     Icon,
     HStack,
     Center,
     Pressable,
   } from 'native-base';
 import { Path, G } from 'react-native-svg'
-import { MaterialCommunityIcons, MaterialIcons, AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons'; 
 
 const HeaderBar = props => {
 
     return (
         <HStack bg="#3E76C9" alignItems="center" height="10" safeAreaTop shadow={6}>
-          <Pressable>
-            <Center flex={1} px={3}>
-              <Icon viewBox="-2500 -1500 2500 2000" top="-20">
+            <Center flex={1}>
+              <Icon viewBox="-2500 -1500 2500 2000" top='-13'>
                 <G fill="#fff" stroke="#fff" transform="rotate(180)">
                   <Path d="M83 1954 c-6 -17 -4 -70 22 -504 24 -411 26 -386 -43 -596 -52 -162
                     -57 -183 -43 -193 63 -46 758 -529 845 -587 70 -48 118 -74 136 -74 18 0 66
@@ -44,7 +34,6 @@ const HeaderBar = props => {
                 </G>
               </Icon>
             </Center>
-          </Pressable>
         </HStack>
     )
 }

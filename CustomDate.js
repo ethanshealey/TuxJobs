@@ -10,9 +10,9 @@ const getTimeSince = (date) => {
 const getTimeColorValue = (date) => {
     let time = getTimeSince(date)
     const timeunit = time.split(" ")[1]
-    if (timeunit === "minute" || timeunit === "minutes" || timeunit === "second" || timeunit === "seconds" || timeunit === "hour" || timeunit === "hours") 
+    if (timeunit === "minute" || timeunit === "minutes" || timeunit === "second" || timeunit === "seconds" || timeunit === "hour" || timeunit === "hours" || timeunit === "day" || timeunit === "days") 
         return "green" 
-    else if(timeunit === "day" || timeunit === "days") 
+    else if(timeunit === "week" || timeunit === "weeks") 
         return "#db6e14"
     else
         return "red"
