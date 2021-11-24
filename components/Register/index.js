@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import {
-  NativeBaseProvider,
   Box,
   Text,
   View,
@@ -12,13 +10,20 @@ import {
   Center,
   Link,
   Button,
-  Icon,
-  IconButton,
   HStack,
-  Divider,
+  Toast
 } from 'native-base';
 import { auth, db } from '../../firebase.js' 
 import { ImageBackground } from 'react-native';
+
+/**
+ * 
+ * Register
+ * 
+ * This page allows the user to sign up for TuxJobs
+ * with an email, username, and password
+ * 
+ */
 
 const Register = props => {
 
@@ -47,6 +52,8 @@ const Register = props => {
                     email: email,
                     jobs: [],
                 })
+
+                Toast.show({ title: `Welcome to TuxJobs, ${username}!`, duration: 3000, status: 'success', placement: 'top' })
             })
             .catch(e => alert(e.message))
         }

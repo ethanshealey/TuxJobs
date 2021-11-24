@@ -6,6 +6,17 @@ import { StyleSheet } from 'react-native'
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { db } from '../../firebase.js'
 
+/**
+ * 
+ * JobSwipe
+ * 
+ * This page is the main page of the app. 
+ * 
+ * On this page the user can search the API by job title, skill, company, and location.
+ * There is also the main job card swiper.
+ * 
+ */
+
 const JobSwipe = props => {
 
     // set up states
@@ -32,19 +43,20 @@ const JobSwipe = props => {
         props.setCurrentJobs(prevJobs => [ ...prevJobs, job ])
     }
 
-    // 
+    // handle the user swiping right
     const handleSwipeRight = async (job) => {
        job.liked = true
        handleSwipe(job)
     }
 
+    // handle the user swiping left
     const handleSwipeLeft = async (job) => {
         job.liked = false
         handleSwipe(job)
     }
 
+    // handle onSearch
     const onSearch = () => {
-        // handle search
         props.search(query, location)
     }
 

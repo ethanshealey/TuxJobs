@@ -6,6 +6,24 @@ import { StyleSheet } from 'react-native'
 import { AntDesign, Feather, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { db } from '../../firebase'
 
+/**
+ * 
+ * History
+ * 
+ * This page displays the user's liked and disliked jobs
+ * in a swipe list view. 
+ * 
+ * The user can filter between liked and disliked by pressing the 
+ * 'check' and 'x' buttons.
+ * 
+ * swiping the job reveals a 'swap' and 'delete' button. Swapping moves
+ * the job to the opposite list, i.e liked -> disliked and vice versa. 
+ * Delete removes the job from the DB
+ * 
+ * on press, a modal with the job details is displayed.
+ * 
+ */
+
 const History = props => {
 
     const [ allJobs, setAllJobs ] = useState([])
@@ -13,6 +31,7 @@ const History = props => {
     const [ isLoading, setIsLoading ] = useState(true)
     const [ showLikedJobs, setShowLikedJobs ] = useState(true)
 
+    // onload, get the users saved jobs from the db
     useEffect(() => { 
         setIsLoading(true)
         db.collection('Users').where('uid', '==', props.user.uid).get().then((qs) => {
@@ -24,21 +43,26 @@ const History = props => {
         setIsLoading(false)
      }, [])
 
+
+    // when allJobs or showLikedJobs changes, update history
     useEffect(() => {
         showLikedJobs ? setHistory([...allJobs.filter(job => job.liked)]) : setHistory([...allJobs.filter(job => !job.liked)])
     }, [allJobs, showLikedJobs])
 
+    // when currentJobs changes, update the db
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
             jobs: [...props.currentJobs]
         })
     }, [props.currentJobs])
 
+    // handle job deletion
     const deleteRow = async (k) => {
         setAllJobs(allJobs.filter((job) => job.id !== k))
         props.setCurrentJobs(props.currentJobs.filter((job) => job.id !== k))
     }
 
+    // handle job swapping
     const swapResponse = async (k) => {
         setAllJobs(allJobs.map(job => job.id === k ? {...job, liked: !job.liked} : job ))
         props.setCurrentJobs(props.currentJobs.map(job => job.id === k ? {...job, liked: !job.liked} : job ))

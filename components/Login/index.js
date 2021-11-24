@@ -5,7 +5,6 @@ import {
   Box,
   Text,
   View,
-  Pressable,
   Center,
   Heading,
   VStack,
@@ -13,14 +12,23 @@ import {
   Input,
   Link,
   Button,
-  Icon,
-  IconButton,
   HStack,
-  Divider,
+  Toast
 } from 'native-base';
 import { auth } from '../../firebase.js'
 import ResetPassword from '../ResetPassword';
 import { ImageBackground } from 'react-native';
+
+/**
+ * 
+ * Login
+ * 
+ * This page allows the user to login using email and password.
+ * 
+ * There is also a choice to reset password, which will send an email
+ * to the user with a link to reset their password.
+ * 
+ */
 
 const Login = props => {
 
@@ -37,6 +45,7 @@ const Login = props => {
                 // if successful set the user hook to 
                 // the signed in
                 props.setUser(userCredentials.user)
+                Toast.show({ title: `Welcome back, ${userCredentials.user.displayName}!`, duration: 3000, status: 'success', placement: 'top' })
             })
             .catch((e) => alert(e))
     }

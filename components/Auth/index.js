@@ -4,6 +4,14 @@ import Register from '../Register'
 
 import { KeyboardAvoidingView, Center } from 'native-base' 
 
+/**
+ * 
+ * Auth
+ * 
+ * This screen contains the login, reset password, and register pages
+ * 
+ */
+
 const Auth = props => {
 
     const [ showLogin, setShowLogin ] = useState(true)

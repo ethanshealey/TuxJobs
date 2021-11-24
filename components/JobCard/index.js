@@ -13,6 +13,14 @@ import {
 } from 'native-base';
 import { getTimeSince, getTimeColorValue } from "../../CustomDate";
 
+/**
+ * 
+ * JobCard
+ * 
+ * This component creates the job card to be swiped by the user.
+ * 
+ */
+
 const JobCard = props => {
 
   return (

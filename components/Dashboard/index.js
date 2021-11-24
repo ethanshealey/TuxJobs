@@ -12,6 +12,19 @@ import { getJoobleData } from '../../API/jooble'
 import { getUsaJobsData } from '../../API/usajobs'
 import JobModal from '../JobModal'
 
+/**
+ * 
+ * Dashboard
+ * 
+ * The main screen of the app, displayed once the user logs in.
+ * 
+ * Based on the selection of pages given in the Footer, this screen
+ * will either show History, JobSwipe, or Settings.
+ * 
+ * This screen also contains the Modal for viewing a job.
+ * 
+ */
+
 const Dashboard = props => {
 
     const [ id, setId ] = useState('')
@@ -27,10 +40,12 @@ const Dashboard = props => {
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
 
+    // onload, get job board data from the APIs
     useEffect(() => { 
         getJoobleData(setJobs).then(getUsaJobsData(setJobs))
      }, [])
 
+     // func to load user data from db
     const getCurrentUser = async () => {
         setIsLoaded(false)
         const data = await db.collection('Users').where('uid', '==', props.user.uid).get().then((qs) => {
@@ -44,11 +59,13 @@ const Dashboard = props => {
         setIsLoaded(true)
     }
 
+    // func to query the job board APIs
     const search = async (query, location) => {
         setIsLoaded(false)
         getJoobleData(setJobs, query, location).then(getUsaJobsData(setJobs, query, location)).then(() => {setIsLoaded(true)})
     } 
 
+    // func to open and display a certain job
     const openJobModal = (job) => {
         setShowJobModal(true)
         setModalJob(job)
@@ -57,7 +74,6 @@ const Dashboard = props => {
     return (
         <>
             { isLoaded ? 
-                
                 <Box flex={1} bg="gray.100" safeAreaTop>
                     <JobModal job={modalJob} isOpen={showJobModal} setIsOpen={setShowJobModal} />
                     <HeaderBar />

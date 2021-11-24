@@ -15,6 +15,15 @@ import {
   } from 'native-base';
 import { MaterialCommunityIcons, MaterialIcons, AntDesign, Entypo } from '@expo/vector-icons'; 
 
+/**
+ * 
+ * Footer
+ * 
+ * This screen is the footer of the app.
+ * It contains the basic navigation of the Dashboard.
+ * 
+ */
+
 const Footer = props => {
 
     return (

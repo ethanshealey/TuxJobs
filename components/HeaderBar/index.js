@@ -7,6 +7,14 @@ import {
   } from 'native-base';
 import { Path, G } from 'react-native-svg'
 
+/**
+ * 
+ * HeaderBar
+ * 
+ * This screen is the header of the app
+ * 
+ */
+
 const HeaderBar = props => {
 
     return (

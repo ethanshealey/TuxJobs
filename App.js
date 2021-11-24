@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NativeBaseProvider, Spinner, Center, extendTheme } from 'native-base';
+import { NativeBaseProvider, Spinner, Center, Toast, extendTheme } from 'native-base';
 import { auth } from './firebase.js'
 import { StatusBar } from 'react-native'
 
@@ -8,9 +8,18 @@ import Dashboard from './components/Dashboard'
 
 //import { useFonts, Bitter_500Medium } from '@expo-google-fonts/bitter'
 
+/**
+ * 
+ * App.js
+ * 
+ * The root of the app.
+ * Here the user object is created so every component can access it
+ * 
+ */
+
 const Home = () => {
 
-  const [ user, setUser ] = useState(1)
+  const [ user, setUser ] = useState({})
   const [ hasLoaded, setHasLoaded ] = useState(false)
   
   // persist user state
