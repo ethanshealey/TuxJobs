@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Spinner, Spacer, Icon, IconButton, View, Box, Header, VStack, Center, Button, Text, Link, Pressable , HStack, Select} from 'native-base'
+import { ScrollView, Spinner, Spacer, Icon, IconButton, View, Box, Header, VStack, Center, Button, Text, Link, Pressable , HStack, Select, Toast } from 'native-base'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { getTimeSince, getTimeColorValue } from '../../CustomDate';
 import { StyleSheet } from 'react-native'
@@ -60,12 +60,14 @@ const History = props => {
     const deleteRow = async (k) => {
         setAllJobs(allJobs.filter((job) => job.id !== k))
         props.setCurrentJobs(props.currentJobs.filter((job) => job.id !== k))
+        Toast.show({ title: 'Job deleted!', duration: 2000 })
     }
 
     // handle job swapping
     const swapResponse = async (k) => {
         setAllJobs(allJobs.map(job => job.id === k ? {...job, liked: !job.liked} : job ))
         props.setCurrentJobs(props.currentJobs.map(job => job.id === k ? {...job, liked: !job.liked} : job ))
+        Toast.show({ title: 'Job Moved!', duration: 2000 })
     }
 
     return (

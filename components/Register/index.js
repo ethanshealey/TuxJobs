@@ -53,7 +53,7 @@ const Register = props => {
                     jobs: [],
                 })
 
-                Toast.show({ title: `Welcome to TuxJobs, ${username}!`, duration: 3000, status: 'success', placement: 'top' })
+                Toast.show({ title: `Welcome to TuxJobs, ${username}!`, duration: 3000, status: 'success' })
             })
             .catch(e => alert(e.message))
         }

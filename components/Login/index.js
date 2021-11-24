@@ -45,7 +45,7 @@ const Login = props => {
                 // if successful set the user hook to 
                 // the signed in
                 props.setUser(userCredentials.user)
-                Toast.show({ title: `Welcome back, ${userCredentials.user.displayName}!`, duration: 3000, status: 'success', placement: 'top' })
+                Toast.show({ title: `Welcome back, ${userCredentials.user.displayName}!`, duration: 3000, status: 'success' })
             })
             .catch((e) => alert(e))
     }
