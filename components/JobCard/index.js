@@ -44,7 +44,7 @@ const JobCard = props => {
       </Box>
       <Stack p="4" space={3}>
         <Stack space={2}>
-          <Heading size="lg" ml="-1">
+          <Heading size="lg" ml="-1" isTruncated>
             {props.job.position}
           </Heading>
           <Divider />
