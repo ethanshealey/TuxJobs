@@ -106,7 +106,7 @@ const Dashboard = props => {
                     { 
                         selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
-                        selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowRatioWarningModal={setShowRatioWarningModal} setShowCatNapInfoModal={setShowCatNapInfoModal} setShowExpirationInfoModal={setShowExpirationInfoModal} /> : <>ERROR</>
+                        selected === 2 ? <Settings id={id} logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowRatioWarningModal={setShowRatioWarningModal} setShowCatNapInfoModal={setShowCatNapInfoModal} setShowExpirationInfoModal={setShowExpirationInfoModal} /> : <>ERROR</>
                     }
                     </Center>
                     <Footer selected={selected} setSelected={setSelected} />
