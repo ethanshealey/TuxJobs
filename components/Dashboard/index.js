@@ -11,6 +11,9 @@ import Settings from '../Settings'
 import { getJoobleData } from '../../API/jooble'
 import { getUsaJobsData } from '../../API/usajobs'
 import JobModal from '../JobModal'
+import RatioWarningInfoModal from '../RatioWarningInfoModal'
+import CatNapInfoModal from '../CatNapInfoModal'
+import ExpirationInfoModal from '../ExpirationInfoModal'
 
 /**
  * 
@@ -27,7 +30,7 @@ import JobModal from '../JobModal'
 
 const Dashboard = props => {
 
-    const [ id, setId ] = useState('')
+    const [ id, setId ] = useState(1)
     const [ username, setUsername ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ isLoaded, setIsLoaded ] = useState(false)
@@ -36,6 +39,9 @@ const Dashboard = props => {
     const [ jobs, setJobs ] = useState([])
     const [ showJobModal, setShowJobModal ] = useState(false)
     const [ modalJob, setModalJob ] = useState({})
+    const [ showRatioWarningModal, setShowRatioWarningModal ] = useState(false)
+    const [ showCatNapInfoModal, setShowCatNapInfoModal ] = useState(false)
+    const [ showExpirationInfoModal, setShowExpirationInfoModal ] = useState(false)
 
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
@@ -76,12 +82,15 @@ const Dashboard = props => {
             { isLoaded ? 
                 <Box flex={1} bg="gray.100" safeAreaTop>
                     <JobModal job={modalJob} isOpen={showJobModal} setIsOpen={setShowJobModal} />
+                    <RatioWarningInfoModal isOpen={showRatioWarningModal} setIsOpen={setShowRatioWarningModal} />
+                    <CatNapInfoModal isOpen={showCatNapInfoModal} setIsOpen={setShowCatNapInfoModal} />
+                    <ExpirationInfoModal isOpen={showExpirationInfoModal} setIsOpen={setShowExpirationInfoModal} />
                     <HeaderBar />
                     <Center flex={1}>
                     { 
                         selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
-                        selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} /> : <>ERROR</>
+                        selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowRatioWarningModal={setShowRatioWarningModal} setShowCatNapInfoModal={setShowCatNapInfoModal} setShowExpirationInfoModal={setShowExpirationInfoModal} /> : <>ERROR</>
                     }
                     </Center>
                     <Footer selected={selected} setSelected={setSelected} />
