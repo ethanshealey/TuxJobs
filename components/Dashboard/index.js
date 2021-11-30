@@ -42,6 +42,7 @@ const Dashboard = props => {
     const [ showRatioWarningModal, setShowRatioWarningModal ] = useState(false)
     const [ showCatNapInfoModal, setShowCatNapInfoModal ] = useState(false)
     const [ showExpirationInfoModal, setShowExpirationInfoModal ] = useState(false)
+    const [ expiration, setExpiration ] = useState(false)
 
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
@@ -51,6 +52,20 @@ const Dashboard = props => {
         getJoobleData(setJobs).then(getUsaJobsData(setJobs))
      }, [])
 
+     useEffect(() => {
+        if (expiration == 'two'){
+            console.log('two')
+        }
+        else if (expiration == 'five'){
+            console.log('five')
+        }
+        else if (expiration == 'ten'){
+            console.log('ten')
+        }
+        else if (expiration == 'never'){
+            console.log('never')
+        }
+     }, [expiration])
      // func to load user data from db
     const getCurrentUser = async () => {
         setIsLoaded(false)
@@ -60,6 +75,7 @@ const Dashboard = props => {
                 setUsername(doc.data().username)
                 setEmail(doc.data().email)
                 setCurrentJobs(doc.data().jobs)
+                setExpiration(doc.data().expiration)
             })
         })
         setIsLoaded(true)

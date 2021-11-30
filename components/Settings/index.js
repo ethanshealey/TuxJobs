@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {
     Box,
     FlatList,
@@ -21,12 +21,47 @@ import {
   } from "native-base"
 import { AntDesign } from '@expo/vector-icons';
 
+import {db} from "../../firebase" 
+
 const Settings = props => {
 
     const [ selected, setSelected ] = useState('two')
+    const [ swipeRatio, setSwipeRatio ] = useState(false) 
+    const [ catNaps, setCatNaps ] = useState(false)
+    const [ expiration, setExpiration ] = useState('two')
 
     const logout = () => {
         props.logout()
+    }
+    useEffect(() => {
+        db.collection('Users').doc(props.id).update({
+            ratio_warning: swipeRatio
+        })
+    },[swipeRatio])
+
+    useEffect(() => {
+        db.collection('Users').doc(props.id).update({
+            catnap: catNaps
+        })
+    },[catNaps])
+
+    useEffect(() => {
+        db.collection('Users').doc(props.id).update({
+            expiration: expiration
+        })
+    },[expiration])
+
+    const toggleSwipeRatio = () => {
+        setSwipeRatio(!swipeRatio)   
+    }
+
+    const toggleCatNaps = () => {
+        setCatNaps(!catNaps)
+    }
+
+    const toggleExpiration = (value) => {
+        console.log(value)
+        setExpiration(value)
     }
 
     return (
@@ -86,13 +121,13 @@ const Settings = props => {
                 <HStack space={6}>
                     <Text>Allow Swipe Ratio Warning{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowRatioWarningModal(true)}/></Text>
                     <Spacer />
-                    <Checkbox />
+                    <Checkbox value = {swipeRatio} onChange={toggleSwipeRatio}/>
                 </HStack>
                 <Divider />
                 <HStack space={6}>
                     <Text>Allow Cat Naps{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowCatNapInfoModal(true)}/></Text>
                     <Spacer />
-                    <Checkbox />
+                    <Checkbox value = {catNaps} onChange={toggleCatNaps}/>
                 </HStack>
                 <Divider />
                 <VStack space={6}>
@@ -100,7 +135,7 @@ const Settings = props => {
                     <Select
                         //onValueChange={(value) => console.log(value)}
                         marginTop="-5"
-                        selectedValue={selected}
+                        selectedValue={expiration}
                         minWidth="370"
                         minHeight="10"
                         marginBottom="200"
@@ -112,10 +147,10 @@ const Settings = props => {
                         mt={1}
                         onValueChange={(itemValue) => setSelected(itemValue)}
                     >
-                        <Select.Item label="2 Weeks" value="two"/>
-                        <Select.Item label="5 Weeks" value="five" />
-                        <Select.Item label="10 Weeks" value="ten" />
-                        <Select.Item label="No Time Expiry" value="never" />
+                        <Select.Item label="2 Weeks" value="two" onPress={() => toggleExpiration("two")}/>
+                        <Select.Item label="5 Weeks" value="five" onPress={() => toggleExpiration("five")}/>
+                        <Select.Item label="10 Weeks" value="ten" onPress={() => toggleExpiration("ten")}/>
+                        <Select.Item label="No Time Expiry" value="never" onPress={() => toggleExpiration("never")}/>
                     </Select>
                 </VStack>
             </VStack>
