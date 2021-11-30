@@ -36,6 +36,7 @@ const Dashboard = props => {
     const [ jobs, setJobs ] = useState([])
     const [ showJobModal, setShowJobModal ] = useState(false)
     const [ modalJob, setModalJob ] = useState({})
+    const [ expiration, setExpiration ] = useState(false)
 
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
@@ -45,6 +46,20 @@ const Dashboard = props => {
         getJoobleData(setJobs).then(getUsaJobsData(setJobs))
      }, [])
 
+     useEffect(() => {
+        if (expiration == 'two'){
+            console.log('two')
+        }
+        else if (expiration == 'five'){
+            console.log('five')
+        }
+        else if (expiration == 'ten'){
+            console.log('ten')
+        }
+        else if (expiration == 'never'){
+            console.log('never')
+        }
+     }, [expiration])
      // func to load user data from db
     const getCurrentUser = async () => {
         setIsLoaded(false)
@@ -54,6 +69,7 @@ const Dashboard = props => {
                 setUsername(doc.data().username)
                 setEmail(doc.data().email)
                 setCurrentJobs(doc.data().jobs)
+                setExpiration(doc.data().expiration)
             })
         })
         setIsLoaded(true)
@@ -81,7 +97,7 @@ const Dashboard = props => {
                     { 
                         selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
-                        selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} /> : <>ERROR</>
+                        selected === 2 ? <Settings logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} id ={id}/> : <>ERROR</>
                     }
                     </Center>
                     <Footer selected={selected} setSelected={setSelected} />
