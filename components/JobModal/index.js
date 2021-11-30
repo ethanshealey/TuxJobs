@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import {Alert, Linking} from 'react-native'
 import { Modal, ScrollView, Image, Text, Button, Divider, HStack, AspectRatio, VStack, Spacer } from 'native-base'
+import { backgroundColor } from 'styled-system'
 
 /**
  * 
@@ -60,8 +61,11 @@ const JobModal = props => {
                     <Button
                         variant='ghost'
                         onPress={() => props.setIsOpen(false)}
+                        _text={{
+                            color: "#3E76C9",
+                          }}
                     >Cancel</Button>
-                    <Button onPress = {handlePress} >Apply</Button>
+                    <Button onPress = {handlePress} style = {{backgroundColor: "#3E76C9"}}>Apply</Button>
                 </Button.Group> 
             </Modal.Footer>
             </Modal.Content>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
     Box,
     FlatList,
@@ -11,6 +11,8 @@ import {
     Center,
     Button,
     View,
+    Select,
+    CheckIcon,
     NativeBaseProvider,
   } from "native-base"
 
@@ -40,6 +42,8 @@ const Settings = props => {
             onPress: logout
         }
     ]
+
+    let [service, setService] = React.useState("")
 
     return (
         <View>
@@ -103,10 +107,35 @@ const Settings = props => {
                 mt="1" 
                 bg="#cccccc"
                 width="370"
-                marginBottom="383"
+                marginBottom="5"
             >   
                 <Text color="white" textAlign="left" marginTop="1.5" marginLeft="8">APP SETTINGS</Text>
             </Box>
+            <HStack>
+                <Center flex={1} px="3">
+                    <VStack alignItems="center" space={4}>
+                        <Select
+                            selectedValue={service}
+                            minWidth="370"
+                            minHeight="10"
+                            marginBottom="318"
+                            accessibilityLabel="Check Job Expiry Date"
+                            placeholder="Check Job Expiry Date"
+                            _selectedItem={{
+                            bg: "teal.600",
+                            endIcon: <CheckIcon size="5" />,
+                            }}
+                            mt={1}
+                            onValueChange={(itemValue) => setService(itemValue)}
+                        >
+                        <Select.Item label="2 Weeks" value="two" />
+                        <Select.Item label="5 Weeks" value="five" />
+                        <Select.Item label="10 Weeks" value="ten" />
+                        <Select.Item label="No Time Expiry" value="never" />
+                        </Select>
+                    </VStack>  
+                </Center>
+            </HStack>
         </View>
     )
 }
