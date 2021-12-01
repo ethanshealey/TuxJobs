@@ -11,9 +11,7 @@ import Settings from '../Settings'
 import { getJoobleData } from '../../API/jooble'
 import { getUsaJobsData } from '../../API/usajobs'
 import JobModal from '../JobModal'
-import RatioWarningInfoModal from '../RatioWarningInfoModal'
-import CatNapInfoModal from '../CatNapInfoModal'
-import ExpirationInfoModal from '../ExpirationInfoModal'
+import SettingsInfoModal from '../SettingsInfoModal'
 
 /**
  * 
@@ -39,10 +37,10 @@ const Dashboard = props => {
     const [ jobs, setJobs ] = useState([])
     const [ showJobModal, setShowJobModal ] = useState(false)
     const [ modalJob, setModalJob ] = useState({})
-    const [ showRatioWarningModal, setShowRatioWarningModal ] = useState(false)
-    const [ showCatNapInfoModal, setShowCatNapInfoModal ] = useState(false)
-    const [ showExpirationInfoModal, setShowExpirationInfoModal ] = useState(false)
     const [ expiration, setExpiration ] = useState(false)
+    const [ showInfoModal, setShowInfoModal ] = useState(false)
+    const [ settingsInfoModalHeader, setSettingsInfoModalHeader ] = useState('')
+    const [ settingsInfoModalBody, setSettingsInfoModalBody ] = useState('')
 
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
@@ -98,15 +96,13 @@ const Dashboard = props => {
             { isLoaded ? 
                 <Box flex={1} bg="gray.100" safeAreaTop>
                     <JobModal job={modalJob} isOpen={showJobModal} setIsOpen={setShowJobModal} />
-                    <RatioWarningInfoModal isOpen={showRatioWarningModal} setIsOpen={setShowRatioWarningModal} />
-                    <CatNapInfoModal isOpen={showCatNapInfoModal} setIsOpen={setShowCatNapInfoModal} />
-                    <ExpirationInfoModal isOpen={showExpirationInfoModal} setIsOpen={setShowExpirationInfoModal} />
+                    <SettingsInfoModal isOpen={showInfoModal} setIsOpen={setShowInfoModal} header={settingsInfoModalHeader} body={settingsInfoModalBody} />
                     <HeaderBar />
                     <Center flex={1}>
                     { 
                         selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
-                        selected === 2 ? <Settings id={id} logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowRatioWarningModal={setShowRatioWarningModal} setShowCatNapInfoModal={setShowCatNapInfoModal} setShowExpirationInfoModal={setShowExpirationInfoModal} /> : <>ERROR</>
+                        selected === 2 ? <Settings id={id} logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowInfoModal={setShowInfoModal} setSettingsInfoModalHeader={setSettingsInfoModalHeader} setSettingsInfoModalBody={setSettingsInfoModalBody} /> : <>ERROR</>
                     }
                     </Center>
                     <Footer selected={selected} setSelected={setSelected} />

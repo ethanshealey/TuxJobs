@@ -71,6 +71,28 @@ const Settings = props => {
         setExpiration(value)
     }
 
+    const handleInfoModalToggle = (m) => {
+        switch(m) {
+            case 'ratio':
+                props.setSettingsInfoModalHeader('Swipe Ratio Warning Information')
+                props.setSettingsInfoModalBody('The Swipe Ratio Warning option provides the user with a popup warning indicating the user has a recent swipe ratio of 80/20 disliked to liked ratio.')
+                break
+            case 'catnap':
+                props.setSettingsInfoModalHeader('Cat Nap Information')
+                props.setSettingsInfoModalBody('We will send a popup reminder every 60 minutes of swiping to take a mental health break!')
+                break
+            case 'exp':
+                props.setSettingsInfoModalHeader('Job Entry Expiration Information')
+                props.setSettingsInfoModalBody('The jobs you have swiped on will automatically be removed after the chosen time.')
+                break
+            default:
+                props.setSettingsInfoModalHeader('Error')
+                props.setSettingsInfoModalBody('There was an error loading this information')
+                break
+        }
+        props.setShowInfoModal(true)
+    }
+
     return (
         <VStack space={1}>
             <Heading fontSize="xl" p="2" pb="4" marginTop="10" marginBottom="0" textAlign="center">
@@ -130,21 +152,21 @@ const Settings = props => {
             </Box>
             <VStack space={2}>
                 <HStack space={6}>
-                    <Text>Allow Swipe Ratio Warning{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowRatioWarningModal(true)}/></Text>
+                    <Text>Allow Swipe Ratio Warning{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('ratio')}/></Text>
                     <Spacer />
-                    <Checkbox value={swipeRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
+                    <Checkbox aria-label="Toggle Swipe Ratio Warning" value={swipeRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <HStack space={6}>
-                    <Text>Allow Cat Naps{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowCatNapInfoModal(true)}/></Text>
+                    <Text>Allow Cat Naps{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('catnap')}/></Text>
                     <Spacer />
-                    <Checkbox value={catNaps} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
+                    <Checkbox aria-label="Toggle Cat Naps" value={catNaps} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <VStack space={6}>
-                    <Text>Job Entry Expiration Time{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowExpirationInfoModal(true)}/></Text>
+                    <Text>Job Entry Expiration Time{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('exp')}/></Text>
                     <Select
-                        //onValueChange={(value) => console.log(value)}
+                        aria-label="Job Entry Expiration Time Select"
                         marginTop="-5"
                         selectedValue={expiration}
                         minWidth="370"
@@ -156,7 +178,6 @@ const Settings = props => {
                         endIcon: <CheckIcon size="5" />,
                         }}
                         mt={1}
-                        onValueChange={(itemValue) => setSelected(itemValue)}
                     >
                         <Select.Item label="2 Weeks" value="two" onPress={() => toggleExpiration("two")}/>
                         <Select.Item label="5 Weeks" value="five" onPress={() => toggleExpiration("five")}/>
