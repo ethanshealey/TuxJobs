@@ -86,6 +86,29 @@ const Dashboard = props => {
         setInterval(() => {setShowCatNapModal(true)}, 3.6 * Math.pow(10,6))
     },[])
 
+    useEffect(() => {
+        if (expiration !== 'never'){
+            const current_date = new Date()
+            let x = -1
+            switch (expiration){
+                case "two":
+                    x = 2
+                    break
+                case "five":
+                    x = 5
+                    break
+                case "ten":
+                    x = 10
+                    break
+                default:
+                    break
+            }
+            db.collection('Users').doc(id).update({
+                jobs:currentJobs.filter(job=>job.date > (current_date-x))
+            })
+        }
+    },[])
+
      // func to load user data from db
     const getCurrentUser = async () => {
         setIsLoaded(false)
@@ -130,7 +153,7 @@ const Dashboard = props => {
                         selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
                         selected === 2 ? <Settings id={id} logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowInfoModal={setShowInfoModal} setSettingsInfoModalHeader={setSettingsInfoModalHeader} setSettingsInfoModalBody={setSettingsInfoModalBody} jobRatio={jobRatio} catnap={catnap} setJobRatio={setJobRatio} setCatNap={setCatNap} setExpiration={setExpiration} expiration={expiration}/> : <>ERROR</>
-                    }
+                    } 
                     </Center>
                     <Footer selected={selected} setSelected={setSelected} />
                 </Box>
