@@ -90,7 +90,7 @@ const Dashboard = props => {
         if (expiration !== 'never'){
             const current_date = new Date()
             let x = -1
-            switch (expiration){
+            switch(expiration) {
                 case "two":
                     x = 2
                     break
@@ -103,9 +103,10 @@ const Dashboard = props => {
                 default:
                     break
             }
-            db.collection('Users').doc(id).update({
-                jobs:currentJobs.filter(job=>job.date > (current_date-x))
-            })
+            if(x !== -1)
+                db.collection('Users').doc(id).update({
+                    jobs:currentJobs.filter(job=>job.date > (current_date-x))
+                })
         }
     },[])
 
