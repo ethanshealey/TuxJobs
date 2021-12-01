@@ -20,7 +20,6 @@ import { auth } from '../../firebase.js'
 
 const ResetPassword = props => {
 
-
     return (
       <Center flex={.65} px={3}>
         <Box safeArea p="2" py="8" w="90%" mx="auto">

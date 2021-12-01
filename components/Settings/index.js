@@ -19,9 +19,8 @@ import {
     Checkbox,
     NativeBaseProvider,
   } from "native-base"
-import { AntDesign } from '@expo/vector-icons';
-
-import {db} from "../../firebase" 
+import { AntDesign, FontAwesome, Zocial, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { auth, db } from "../../firebase" 
 
 const Settings = props => {
 
@@ -33,6 +32,14 @@ const Settings = props => {
     const logout = () => {
         props.logout()
     }
+
+    const resetPassword = () => {
+        auth
+            .sendPasswordResetEmail(props.email)
+            .then(() => alert('Password reset email sent'))
+            .catch((e) => alert(e))
+    }
+
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
             ratio_warning: swipeRatio
@@ -66,7 +73,7 @@ const Settings = props => {
 
     return (
         <VStack space={1}>
-            <Heading fontSize="xl" height="31" p="2" pb="4" marginTop="7" marginBottom="6" textAlign="center">
+            <Heading fontSize="xl" p="2" pb="4" marginTop="10" marginBottom="0" textAlign="center">
                 Settings
             </Heading>
             <Box
@@ -86,19 +93,23 @@ const Settings = props => {
             </Box>
             <VStack space={2}>
                 <Box>
-                    <Text>Username: { props.username }</Text>
+                    <Text><FontAwesome name="user" size={15} color="black" />{'   '}Username: { props.username }</Text>
                 </Box>
                 <Divider />
                 <Box>
-                    <Text>Email: { props.email }</Text>
+                    <Text><Zocial name="email" size={15} color="black" />{'   '}Email: { props.email }</Text>
                 </Box>
                 <Divider />
                 <Box>
-                    <Text>Jobs Swiped: { props.swipedJobs }</Text>
+                    <Text><MaterialIcons name="swipe" size={15} color="black" />{'   '}Jobs Swiped: { props.swipedJobs }</Text>
                 </Box>
                 <Divider />
                 <Box>
-                    <Text style={{ color: "red" }} onPress={logout}>Logout</Text>
+                    <Text style={{ color: "#3E76C9" }} onPress={resetPassword}><MaterialCommunityIcons name="lock-reset" size={15} color="black" />{'   '}Reset Password</Text>
+                </Box>
+                <Divider />
+                <Box>
+                    <Text style={{ color: "red" }} onPress={logout}><AntDesign name="logout" size={15} color="black" />{'   '}Logout</Text>
                 </Box>
             </VStack>
             <Box
@@ -121,13 +132,13 @@ const Settings = props => {
                 <HStack space={6}>
                     <Text>Allow Swipe Ratio Warning{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowRatioWarningModal(true)}/></Text>
                     <Spacer />
-                    <Checkbox value = {swipeRatio} onChange={toggleSwipeRatio}/>
+                    <Checkbox value={swipeRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <HStack space={6}>
                     <Text>Allow Cat Naps{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => props.setShowCatNapInfoModal(true)}/></Text>
                     <Spacer />
-                    <Checkbox value = {catNaps} onChange={toggleCatNaps}/>
+                    <Checkbox value={catNaps} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <VStack space={6}>

@@ -7,7 +7,7 @@ import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
 
 // hide warnings
-LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs()
 
 //import { useFonts, Bitter_500Medium } from '@expo-google-fonts/bitter'
 
