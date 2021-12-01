@@ -25,9 +25,6 @@ import { auth, db } from "../../firebase"
 const Settings = props => {
 
     const [ selected, setSelected ] = useState('two')
-    const [ swipeRatio, setSwipeRatio ] = useState(false) 
-    const [ catNaps, setCatNaps ] = useState(false)
-    const [ expiration, setExpiration ] = useState('two')
 
     const logout = () => {
         props.logout()
@@ -42,33 +39,32 @@ const Settings = props => {
 
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
-            ratio_warning: swipeRatio
+            ratio_warning: props.jobRatio
         })
-    },[swipeRatio])
+    },[props.jobRatio])
 
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
-            catnap: catNaps
+            catnap: props.catnap
         })
-    },[catNaps])
+    },[props.catnap])
 
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
-            expiration: expiration
+            expiration: props.expiration
         })
-    },[expiration])
+    },[props.expiration])
 
     const toggleSwipeRatio = () => {
-        setSwipeRatio(!swipeRatio)   
+        props.setJobRatio(!props.jobRatio)   
     }
 
     const toggleCatNaps = () => {
-        setCatNaps(!catNaps)
+        props.setCatNap(!props.catnaps)
     }
 
     const toggleExpiration = (value) => {
-        console.log(value)
-        setExpiration(value)
+        props.setExpiration(value)
     }
 
     const handleInfoModalToggle = (m) => {
@@ -154,13 +150,13 @@ const Settings = props => {
                 <HStack space={6}>
                     <Text>Allow Swipe Ratio Warning{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('ratio')}/></Text>
                     <Spacer />
-                    <Checkbox aria-label="Toggle Swipe Ratio Warning" value={swipeRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
+                    <Checkbox aria-label="Toggle Swipe Ratio Warning" value={props.jobRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <HStack space={6}>
                     <Text>Allow Cat Naps{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('catnap')}/></Text>
                     <Spacer />
-                    <Checkbox aria-label="Toggle Cat Naps" value={catNaps} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
+                    <Checkbox aria-label="Toggle Cat Naps" value={props.catnaps} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <VStack space={6}>
@@ -168,7 +164,7 @@ const Settings = props => {
                     <Select
                         aria-label="Job Entry Expiration Time Select"
                         marginTop="-5"
-                        selectedValue={expiration}
+                        selectedValue={props.expiration}
                         minWidth="370"
                         minHeight="10"
                         marginBottom="200"

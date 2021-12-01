@@ -12,6 +12,8 @@ import { getJoobleData } from '../../API/jooble'
 import { getUsaJobsData } from '../../API/usajobs'
 import JobModal from '../JobModal'
 import SettingsInfoModal from '../SettingsInfoModal'
+import JobRatioModal from '../JobRatioModal'
+import CatNapModal from '../CatNapModal'
 
 /**
  * 
@@ -31,6 +33,8 @@ const Dashboard = props => {
     const [ id, setId ] = useState(1)
     const [ username, setUsername ] = useState('')
     const [ email, setEmail ] = useState('')
+    const [ jobRatio, setJobRatio ] = useState(false)
+    const [ catnap, setCatNap ] = useState(false)
     const [ isLoaded, setIsLoaded ] = useState(false)
     const [ selected, setSelected ] = useState(1)
     const [ currentJobs, setCurrentJobs ] = useState([])
@@ -41,6 +45,9 @@ const Dashboard = props => {
     const [ showInfoModal, setShowInfoModal ] = useState(false)
     const [ settingsInfoModalHeader, setSettingsInfoModalHeader ] = useState('')
     const [ settingsInfoModalBody, setSettingsInfoModalBody ] = useState('')
+    const [ showRatioModal, setShowRatioModal ] = useState(false)
+    const [ratio, setRatio ] = useState('')
+    const [ showCatNapModal, setShowCatNapModal ] = useState(false)
 
     // onload, get the current user's data
     useEffect(() => { getCurrentUser() }, [])
@@ -64,6 +71,21 @@ const Dashboard = props => {
             console.log('never')
         }
      }, [expiration])
+
+     useEffect(() => {
+         if(currentJobs.length % 100 == 0){
+            const disliked = currentJobs.filter(job=>!job.liked).length
+            setRatio(parseInt((disliked/currentJobs.length) * 100) + '%')
+            if (disliked / currentJobs.length > .8){
+                setShowRatioModal(true) 
+            }
+         }
+     },[currentJobs])
+
+    useEffect(() => {
+        setInterval(() => {setShowCatNapModal(true)}, 3.6 * Math.pow(10,6))
+    },[])
+
      // func to load user data from db
     const getCurrentUser = async () => {
         setIsLoaded(false)
@@ -74,6 +96,9 @@ const Dashboard = props => {
                 setEmail(doc.data().email)
                 setCurrentJobs(doc.data().jobs)
                 setExpiration(doc.data().expiration)
+                console.log(doc.data().ratio_warning, doc.data().catnap)
+                setRatio(doc.data().ratio_warning)
+                setCatNap(doc.data().catnap)
             })
         })
         setIsLoaded(true)
@@ -97,12 +122,14 @@ const Dashboard = props => {
                 <Box flex={1} bg="gray.100" safeAreaTop>
                     <JobModal job={modalJob} isOpen={showJobModal} setIsOpen={setShowJobModal} />
                     <SettingsInfoModal isOpen={showInfoModal} setIsOpen={setShowInfoModal} header={settingsInfoModalHeader} body={settingsInfoModalBody} />
+                    <JobRatioModal isOpen={showRatioModal} setIsOpen={setShowRatioModal} ratio={ratio}/>
+                    <CatNapModal isOpen={showCatNapModal} setIsOpen={setShowCatNapModal} ratio={ratio}/>
                     <HeaderBar />
                     <Center flex={1}>
                     { 
                         selected === 0 ? <History openJobModal={openJobModal} jobs={jobs} user={props.user} id={id} setCurrentJobs={setCurrentJobs} currentJobs={currentJobs}/> :
                         selected === 1 ? <JobSwipe openJobModal={openJobModal} search={search} jobs={jobs} currentJobs={currentJobs} setCurrentJobs={setCurrentJobs} setJobs={setJobs} user={props.user} userId={id} /> :
-                        selected === 2 ? <Settings id={id} logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowInfoModal={setShowInfoModal} setSettingsInfoModalHeader={setSettingsInfoModalHeader} setSettingsInfoModalBody={setSettingsInfoModalBody} /> : <>ERROR</>
+                        selected === 2 ? <Settings id={id} logout={props.logout} username={username} email={email} swipedJobs={currentJobs.length} setShowInfoModal={setShowInfoModal} setSettingsInfoModalHeader={setSettingsInfoModalHeader} setSettingsInfoModalBody={setSettingsInfoModalBody} jobRatio={jobRatio} catnap={catnap} setJobRatio={setJobRatio} setCatNap={setCatNap} setExpiration={setExpiration} expiration={expiration}/> : <>ERROR</>
                     }
                     </Center>
                     <Footer selected={selected} setSelected={setSelected} />
