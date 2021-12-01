@@ -51,6 +51,9 @@ const Register = props => {
                     username: username,
                     email: email,
                     jobs: [],
+                    ratio_warning: true,
+                    catnap: true,
+                    expiration: 'ten'
                 })
 
                 Toast.show({ title: `Welcome to TuxJobs, ${username}!`, duration: 3000, status: 'success' })
