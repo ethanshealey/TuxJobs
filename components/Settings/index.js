@@ -37,6 +37,7 @@ const Settings = props => {
             .catch((e) => alert(e))
     }
 
+    /*
     useEffect(() => {
         db.collection('Users').doc(props.id).update({
             ratio_warning: props.jobRatio
@@ -53,14 +54,14 @@ const Settings = props => {
         db.collection('Users').doc(props.id).update({
             expiration: props.expiration
         })
-    },[props.expiration])
+    },[props.expiration])*/
 
     const toggleSwipeRatio = () => {
         props.setJobRatio(!props.jobRatio)   
     }
 
     const toggleCatNaps = () => {
-        props.setCatNap(!props.catnaps)
+        props.setCatNap(!props.catnap)
     }
 
     const toggleExpiration = (value) => {
@@ -150,13 +151,13 @@ const Settings = props => {
                 <HStack space={6}>
                     <Text>Allow Swipe Ratio Warning{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('ratio')}/></Text>
                     <Spacer />
-                    <Checkbox aria-label="Toggle Swipe Ratio Warning" value={props.jobRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
+                    <Checkbox aria-label="Toggle Swipe Ratio Warning" isChecked={props.jobRatio} onChange={toggleSwipeRatio} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <HStack space={6}>
                     <Text>Allow Cat Naps{'   '}<AntDesign name="infocirlceo" size={15} color="black" onPress={() => handleInfoModalToggle('catnap')}/></Text>
                     <Spacer />
-                    <Checkbox aria-label="Toggle Cat Naps" value={props.catnaps} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
+                    <Checkbox aria-label="Toggle Cat Naps" isChecked={props.catnap} onChange={toggleCatNaps} _checked={{ backgroundColor: '#3E76C9', borderColor: '#3E76C9' }}/>
                 </HStack>
                 <Divider />
                 <VStack space={6}>

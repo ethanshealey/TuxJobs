@@ -30,23 +30,26 @@ import CatNapModal from '../CatNapModal'
 
 const Dashboard = props => {
 
+    // user states
     const [ id, setId ] = useState(1)
     const [ username, setUsername ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ jobRatio, setJobRatio ] = useState(false)
     const [ catnap, setCatNap ] = useState(false)
+    const [ expiration, setExpiration ] = useState(false)
+    const [ ratio, setRatio ] = useState('')
+
+    // content states
     const [ isLoaded, setIsLoaded ] = useState(false)
     const [ selected, setSelected ] = useState(1)
     const [ currentJobs, setCurrentJobs ] = useState([])
     const [ jobs, setJobs ] = useState([])
     const [ showJobModal, setShowJobModal ] = useState(false)
     const [ modalJob, setModalJob ] = useState({})
-    const [ expiration, setExpiration ] = useState(false)
     const [ showInfoModal, setShowInfoModal ] = useState(false)
     const [ settingsInfoModalHeader, setSettingsInfoModalHeader ] = useState('')
     const [ settingsInfoModalBody, setSettingsInfoModalBody ] = useState('')
     const [ showRatioModal, setShowRatioModal ] = useState(false)
-    const [ratio, setRatio ] = useState('')
     const [ showCatNapModal, setShowCatNapModal ] = useState(false)
 
     // onload, get the current user's data
@@ -54,7 +57,7 @@ const Dashboard = props => {
 
     // onload, get job board data from the APIs
     useEffect(() => { 
-        getJoobleData(setJobs).then(getUsaJobsData(setJobs))
+        getJoobleData(setJobs)
      }, [])
 
      useEffect(() => {
@@ -83,7 +86,7 @@ const Dashboard = props => {
      },[currentJobs])
 
     useEffect(() => {
-        setInterval(() => {setShowCatNapModal(true)}, 3.6 * Math.pow(10,6))
+        setInterval(() => { setShowCatNapModal(true) }, 3.6 * Math.pow(10,6))
     },[])
 
     useEffect(() => {
@@ -108,7 +111,7 @@ const Dashboard = props => {
                     jobs:currentJobs.filter(job=>job.date > (current_date-x))
                 })
         }
-    },[])
+    }, [])
 
      // func to load user data from db
     const getCurrentUser = async () => {
@@ -120,18 +123,35 @@ const Dashboard = props => {
                 setEmail(doc.data().email)
                 setCurrentJobs(doc.data().jobs)
                 setExpiration(doc.data().expiration)
-                console.log(doc.data().ratio_warning, doc.data().catnap)
-                setRatio(doc.data().ratio_warning)
+                setJobRatio(doc.data().ratio_warning)
                 setCatNap(doc.data().catnap)
             })
         })
         setIsLoaded(true)
     }
 
+    useEffect(() => {
+        db.collection('Users').doc(id.toString()).update({
+            ratio_warning: jobRatio 
+        })
+    }, [jobRatio])
+
+    useEffect(() => {
+        db.collection('Users').doc(id.toString()).update({
+            catnap: catnap 
+        })
+    }, [catnap])
+
+    useEffect(() => {
+        db.collection('Users').doc(id.toString()).update({
+            expiration: expiration 
+        })
+    }, [expiration])
+
     // func to query the job board APIs
     const search = async (query, location) => {
         setIsLoaded(false)
-        getJoobleData(setJobs, query, location).then(getUsaJobsData(setJobs, query, location)).then(() => {setIsLoaded(true)})
+        getJoobleData(setJobs, query, location).then(() => {setIsLoaded(true)})
     } 
 
     // func to open and display a certain job
